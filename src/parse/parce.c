@@ -6,7 +6,7 @@
 /*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:46:23 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/12 17:53:31 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/12 18:08:58 by dabalm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ int set_texture(const char *line, t_map *map)
     return (1);
 }
 
-int check_textures(t_game *game)
-{
+// int check_textures(t_game *game)
+// {
     
-}
+// }
 
 int get_textures(int fd, t_map *map)
 {

@@ -1,2 +1,7 @@
 *.o
-./cub3D
+cub3D
+
+libft/libft.a
+minilibx-linux/libmlx.a
+minilibx-linux/libmlx_Linux.a
+minilibx-linux/test/mlx-test
