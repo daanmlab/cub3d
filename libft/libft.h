@@ -6,7 +6,7 @@
 /*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 10:59:47 by dabalm            #+#    #+#             */
-/*   Updated: 2023/11/16 17:05:41 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/13 19:35:38 by dabalm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ char				*ft_substr(const char *s, unsigned int start, size_t len);
 char				*ft_substr(const char *s, unsigned int start, size_t len);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
+
+// extra
+void	*ft_free_tab(char **tab);
 
 // printf
 int					putnbr_base(long n, char *base);

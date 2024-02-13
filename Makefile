@@ -13,7 +13,7 @@ NAME = cub3D
 
 CC = cc
 CFLAGS = -Werror -Wextra -Wall -O3 -g
-ARGS = maps/test.cub
+ARGS = test.cub
 ARGS2 = maps/test.cub maps/testcopy.cub
 
 MINILIBX_PATH = minilibx-linux/
@@ -31,6 +31,8 @@ OBJ_PATH = obj/
 SRC = $(addprefix $(SRC_PATH), \
 		main.c \
 		parse/parce.c \
+		parse/textures.c \
+		parse/colors.c \
 )
 
 $(OBJ): $(OBJ_PATH)

@@ -1,6 +1,9 @@
 parsing
     checking map
         checking configs
+            checking textures
+                checking filepath
+                checking file validity
         checking fil
     creating matrix
     filling matrix

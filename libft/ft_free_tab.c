@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/11 15:10:27 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/13 21:02:45 by dabalm           ###   ########.fr       */
+/*   Created: 2024/02/13 19:33:52 by dabalm            #+#    #+#             */
+/*   Updated: 2024/02/13 19:35:44 by dabalm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-int	main(int argc, char const *argv[])
+void	*ft_free_tab(char **tab)
 {
-	struct s_game	game;
+	int	i;
 
-	game.mlx = mlx_init();
-	if (parse(argc, argv, &game))
-		ft_printf("great success\n");
-	free_textures(&game);
-	mlx_destroy_display(game.mlx);
-	free(game.mlx);
-	return (0);
+	i = 0;
+	while (tab && tab[i])
+		free(tab[i++]);
+	free(tab);
+	return (NULL);
 }
