@@ -6,7 +6,7 @@
 /*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:10:27 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/13 21:02:45 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/14 17:35:03 by dabalm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char const *argv[])
 	game.mlx = mlx_init();
 	if (parse(argc, argv, &game))
 		ft_printf("great success\n");
-	free_textures(&game);
+	// free_textures(&game);
 	mlx_destroy_display(game.mlx);
 	free(game.mlx);
 	return (0);

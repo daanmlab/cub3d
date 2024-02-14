@@ -6,7 +6,7 @@
 /*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/13 20:49:44 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/14 19:40:46 by dabalm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,16 @@ typedef struct s_img
     int             y;
 }					t_img;
 
+typedef struct s_player
+{
+    int initial_y;
+    int initial_x;
+    char initial_direction;
+} t_player;
+
 typedef struct s_map
 {
-    unsigned char **matrix;
+    char **matrix;
     char *north_texture;
     char *south_texture;
     char *west_texture;
@@ -74,6 +81,7 @@ typedef struct s_game
 int parse(int argc, char const *argv[], t_game *game);
 int get_textures(int fd, t_game *game);
 int	get_colors(int fd, t_game *game);
+int get_matrix(int fd, t_game *game);
 void	*free_textures(t_game *game);
 
 #endif
