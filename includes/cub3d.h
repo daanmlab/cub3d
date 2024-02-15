@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/15 18:12:50 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/15 21:53:39 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,38 @@ void	*free_textures(t_game *game);
 */
 void free_matrix(char **matrix);
 
+
+
+
+
+
+
+
+
+
+//? tlouro-c
+
+typedef struct s_vector	t_vector;
+typedef struct s_player	t_player;
+
+struct s_vector
+{
+	double	x;
+	double	y;
+};
+
+struct s_player
+{
+	t_vector	position;
+	t_vector	direction;
+};
+
+//* Vector Functions
+
+t_vector	new_vector(double x, double y);
+t_vector	v_sum(t_vector v1, t_vector v2);
+t_vector	v_mult(t_vector v1, t_vector v2);
+t_vector	v_normalize(t_vector v);
+t_vector	v_rotate(t_vector v1, double angle);
 
 #endif
