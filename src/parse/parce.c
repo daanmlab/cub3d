@@ -6,7 +6,7 @@
 /*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:46:23 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/14 17:29:54 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/15 18:13:43 by dabalm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,9 @@ int	parse(int argc, char const *argv[], t_game *game)
 		return !!free_textures(game);
 	if (!get_matrix(fd, game))
 		return !!free_textures(game);
+	if (!get_player(game))
+		return  free_matrix(game->map.matrix), !!free_textures(game);
+	if (!do_floodfill(game))
+		return free_matrix(game->map.matrix), !!free_textures(game);
 	return (1);
 }

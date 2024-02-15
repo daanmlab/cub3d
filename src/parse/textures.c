@@ -6,7 +6,7 @@
 /*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:29:53 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/13 19:36:12 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/15 21:04:41 by dabalm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	set_texture(const char *line, t_map *map)
 		i++;
 	if (i != 2)
 		return (!!ft_free_tab(split));
-	if (!ft_strncmp(split[0], "NO", 3))
+	if (!ft_strncmp(split[0], "NO", 3) && !map->north_texture)
 		map->north_texture = ft_strtrim(split[1], "\n ");
-	else if (!ft_strncmp(split[0], "SO", 3))
+	else if (!ft_strncmp(split[0], "SO", 3) && !map->south_texture)
 		map->south_texture = ft_strtrim(split[1], "\n ");
-	else if (!ft_strncmp(split[0], "WE", 3))
+	else if (!ft_strncmp(split[0], "WE", 3) && !map->west_texture)
 		map->west_texture = ft_strtrim(split[1], "\n ");
-	else if (!ft_strncmp(split[0], "EA", 3))
+	else if (!ft_strncmp(split[0], "EA", 3) && !map->east_texture)
 		map->east_texture = ft_strtrim(split[1], "\n ");
 	else
 		return (!!ft_free_tab(split));
@@ -83,13 +83,27 @@ void	*free_textures(t_game *game)
 	return (NULL);
 }
 
+int check_enough_textures(t_game *game)
+{
+	int		i;
+	char	*textures[4];
+
+	textures[0] = game->map.north_texture;
+	textures[1] = game->map.south_texture;
+	textures[2] = game->map.west_texture;
+	textures[3] = game->map.east_texture;
+	i = 0;
+	while (i < 4 && textures[i])
+		i++;
+	return i == 4;
+}
+
 int	create_textures(t_game *game)
 {
-	char	*textures[4];
 	t_img	*images[4];
-	int		i;
+	char	*textures[4];
+	int i;
 
-	i = 0;
 	textures[0] = game->map.north_texture;
 	textures[1] = game->map.south_texture;
 	textures[2] = game->map.west_texture;
@@ -98,10 +112,9 @@ int	create_textures(t_game *game)
 	images[1] = &game->textures.south;
 	images[2] = &game->textures.west;
 	images[3] = &game->textures.east;
-	while (i < 4 && textures[i])
-		i++;
-	if (i != 4)
-		return (0);
+
+	if (!check_enough_textures(game))
+		return ft_printf("not enough textures") && !!free_textures(game);
 	i = 0;
 	while (i < 4 && create_img(game, images[i], textures[i]))
 		i++;
@@ -123,12 +136,12 @@ int	get_textures(int fd, t_game *game)
 	game->textures.south.img = NULL;
 	game->textures.west.img = NULL;
 	game->textures.east.img = NULL;
-	while (set_texture(line, &game->map))
+	while (!check_enough_textures(game) && line)
 	{
+		set_texture(line, &game->map);
 		free(line);
 		line = get_next_line(fd);
 	}
-	create_textures(game);
 	free(line);
-	return (1);
+	return create_textures(game);
 }

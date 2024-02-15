@@ -6,7 +6,7 @@
 /*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/14 19:40:46 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/15 18:12:50 by dabalm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,20 @@
 # include <math.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+
+
+typedef struct s_position
+{
+    int y;
+    int x;
+} t_position;
+
+enum Direction{
+    NORTH = 'N',
+    SOUTH = 'S',
+    EAST = 'S',
+    WEST = 'W'
+};
 
 typedef struct s_color
 {
@@ -40,9 +54,8 @@ typedef struct s_img
 
 typedef struct s_player
 {
-    int initial_y;
-    int initial_x;
-    char initial_direction;
+    struct s_position    initial_postion;
+    enum Direction initial_direction;
 } t_player;
 
 typedef struct s_map
@@ -52,6 +65,7 @@ typedef struct s_map
     char *south_texture;
     char *west_texture;
     char *east_texture;
+    struct s_position size;
     struct s_color ceiling_color;
     struct s_color floor_color;
 } t_map;
@@ -70,10 +84,12 @@ typedef struct s_game
     struct s_textures textures;
     struct s_color  ceiling_color;
     struct s_color  floor_color;
+    struct s_player player;
     void			*mlx;
 	void			*mlx_win;
     int y;
 } t_game;
+
 
 /**
  * Parsing
@@ -82,6 +98,14 @@ int parse(int argc, char const *argv[], t_game *game);
 int get_textures(int fd, t_game *game);
 int	get_colors(int fd, t_game *game);
 int get_matrix(int fd, t_game *game);
+int get_player(t_game *game);
+int do_floodfill(t_game *game);
 void	*free_textures(t_game *game);
+
+/**
+ * utils
+*/
+void free_matrix(char **matrix);
+
 
 #endif

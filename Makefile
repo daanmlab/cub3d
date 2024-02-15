@@ -34,6 +34,8 @@ SRC = $(addprefix $(SRC_PATH), \
 		parse/textures.c \
 		parse/colors.c \
 		parse/matrix.c \
+		parse/player.c \
+		parse/floodfill.c \
 )
 
 $(OBJ): $(OBJ_PATH)

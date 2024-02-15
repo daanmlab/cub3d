@@ -6,7 +6,7 @@
 /*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:41:50 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/13 21:01:37 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/15 20:39:44 by dabalm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,6 @@ int	get_colors(int fd, t_game *game)
 		line = get_next_line(fd);
 	}
 	free(line);
-    if (game->ceiling_color.error || game->floor_color.error)
-    {   
-        return (0);
-    }
-	return (1);
+    return !game->ceiling_color.error && !game->floor_color.error;
+
 }
