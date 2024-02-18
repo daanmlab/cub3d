@@ -6,18 +6,22 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/15 21:53:39 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/18 23:29:16 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <stdbool.h>
 
+# define WIDTH 1080
+# define HEIGHT 720
 
 typedef struct s_position
 {
@@ -25,12 +29,13 @@ typedef struct s_position
     int x;
 } t_position;
 
-enum Direction{
-    NORTH = 'N',
-    SOUTH = 'S',
-    EAST = 'S',
-    WEST = 'W'
-};
+typedef enum e_direction
+{
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST
+}	t_direction;
 
 typedef struct s_color
 {
@@ -51,12 +56,6 @@ typedef struct s_img
     int             x;
     int             y;
 }					t_img;
-
-typedef struct s_player
-{
-    struct s_position    initial_postion;
-    enum Direction initial_direction;
-} t_player;
 
 typedef struct s_map
 {
@@ -120,6 +119,7 @@ void free_matrix(char **matrix);
 
 typedef struct s_vector	t_vector;
 typedef struct s_player	t_player;
+typedef struct s_engine t_engine;
 
 struct s_vector
 {
@@ -130,15 +130,41 @@ struct s_vector
 struct s_player
 {
 	t_vector	position;
+	t_vector	map_square;
 	t_vector	direction;
+	t_vector	plane;
+};
+
+struct s_engine
+{
+	t_vector	ray_dir;
+	t_vector	wall_square;
+	double		plane_multiplier;
+	double		delta_x;
+	double		delta_y;
+	double		dist_to_side_x;
+	double		dist_to_side_y;
+	double		step_x;
+	double		step_y;
+	double		dda_distance_x;
+	double		dda_distance_y;
+	double		player_to_wall_distance;
+	double		perpendicular_distance;
+	double		line_height;
+	bool		wall_hit;
+	t_direction	wall_direction;
 };
 
 //* Vector Functions
 
 t_vector	new_vector(double x, double y);
 t_vector	v_sum(t_vector v1, t_vector v2);
-t_vector	v_mult(t_vector v1, t_vector v2);
+t_vector	v_mult(t_vector v1, double scalar);
 t_vector	v_normalize(t_vector v);
 t_vector	v_rotate(t_vector v1, double angle);
+double		v_magnitude(t_vector v);
+
+
+void		line(t_img *img, t_vector start, t_vector end, int color);
 
 #endif
