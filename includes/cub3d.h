@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/18 23:29:16 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/19 13:29:50 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ typedef struct s_map
     char *west_texture;
     char *east_texture;
     struct s_position size;
-    struct s_color ceiling_color;
-    struct s_color floor_color;
+    t_rectangle ceiling;
+    t_rectangle floor;
 } t_map;
 
 typedef struct s_textures
@@ -120,6 +120,7 @@ void free_matrix(char **matrix);
 typedef struct s_vector	t_vector;
 typedef struct s_player	t_player;
 typedef struct s_engine t_engine;
+typedef struct s_rectangle	t_rectangle;
 
 struct s_vector
 {
@@ -133,6 +134,8 @@ struct s_player
 	t_vector	map_square;
 	t_vector	direction;
 	t_vector	plane;
+	double		pov_rotation_x_axis;
+	double		pov_rotation_y_axis;
 };
 
 struct s_engine
@@ -155,6 +158,14 @@ struct s_engine
 	t_direction	wall_direction;
 };
 
+struct s_rectangle
+{
+	t_vector		start;
+	unsigned int	width;
+	unsigned int	height;
+	unsigned int	color;
+};
+
 //* Vector Functions
 
 t_vector	new_vector(double x, double y);
@@ -164,7 +175,12 @@ t_vector	v_normalize(t_vector v);
 t_vector	v_rotate(t_vector v1, double angle);
 double		v_magnitude(t_vector v);
 
-
 void		line(t_img *img, t_vector start, t_vector end, int color);
+void		rectangle(t_img *img, t_rectangle rectangle);
+void		my_mlx_pixel_put(t_img *img, t_vector vector, unsigned int color);
+t_rectangle	new_rectangle(unsigned int width, unsigned int height,
+		unsigned int color);
+
+void	draw_floor_and_ceiling(t_map map, t_player player, t_img *img);
 
 #endif

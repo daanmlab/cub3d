@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:43:12 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/18 23:32:48 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/19 13:33:25 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 static void	set_distances_to_sides(t_player *player, t_engine *this);
 static void	calculate_distances_to_wall(t_player *player, t_engine *this);
 static void	dda_find_wall(t_engine *this, int **map);
-static void	draw_wall_line(t_engine *this, t_img *img);
+static void	draw_wall_line(t_engine *this, t_map map, t_img *img);
 
 void	engine(t_player player, t_map map, t_img *img)
 {
 	static t_engine	this;
 	int				pixel_num;
-
+	
+	draw_floor_and_ceiling(map, player, img);
 	player.map_square = new_vector(floor(player.position.x),
 			floor(player.position.y));
 	this.wall_square = new_vector(player.map_square.x, player.map_square.y);
@@ -37,13 +38,28 @@ void	engine(t_player player, t_map map, t_img *img)
 		set_distances_to_sides(&player, &this);
 		dda_find_wall(&this, map.matrix);
 		calculate_distances_to_wall(&player, &this);
-		draw_wall_line(&this, img);
+		draw_wall_line(&this, map, img);
 	}
 }
 
-static void	draw_wall_line(t_engine *this, t_img *img)
+static void	draw_wall_line(t_engine *this, t_map map, t_img *img)
 {
-	
+	if (this->wall_direction == EAST)
+	{
+		//? Apply East Texture
+	}
+	else if (this->wall_direction == WEST)
+	{
+		//? Apply West Texture
+	}
+	else if (this->wall_direction == NORTH)
+	{
+		//? Apply North Texture
+	}
+	else
+	{
+		//? Apply South Texture
+	}
 }
 
 static void	calculate_distances_to_wall(t_player *player, t_engine *this)
