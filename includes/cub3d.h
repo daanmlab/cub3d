@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/19 13:29:50 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:56:08 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 # define WIDTH 1080
 # define HEIGHT 720
+# define TEXTURE_SIZE 32
 
 typedef struct s_position
 {
@@ -154,6 +155,10 @@ struct s_engine
 	double		player_to_wall_distance;
 	double		perpendicular_distance;
 	double		line_height;
+	double		texture_y;
+	double		texture_x;
+	double		texture_y_step;
+	double		texture_x_step;
 	bool		wall_hit;
 	t_direction	wall_direction;
 };

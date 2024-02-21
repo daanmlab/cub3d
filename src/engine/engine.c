@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:43:12 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/19 13:33:25 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:55:50 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,9 @@ static void	calculate_distances_to_wall(t_player *player, t_engine *this)
 			* v_magnitude(this->ray_dir);
 	this->perpendicular_distance = this->player_to_wall_distance 
 			/ v_magnitude(this->ray_dir);
+	this->line_height = (HEIGHT / this->perpendicular_distance);
+	this->texture_y = 0;
+	this->texture_y_step = TEXTURE_SIZE / this->line_height;
 }
 
 static void	dda_find_wall(t_engine *this, int **map)
