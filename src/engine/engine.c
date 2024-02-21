@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:43:12 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/21 14:55:50 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/21 18:18:34 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 static void	set_distances_to_sides(t_player *player, t_engine *this);
 static void	calculate_distances_to_wall(t_player *player, t_engine *this);
 static void	dda_find_wall(t_engine *this, int **map);
-static void	draw_wall_line(t_engine *this, t_map map, t_img *img);
+static void	draw_wall_line(t_engine *this, t_map map, int pixel_num,
+				t_img *img);
 
 void	engine(t_player player, t_map map, t_img *img)
 {
 	static t_engine	this;
 	int				pixel_num;
-	
+
 	draw_floor_and_ceiling(map, player, img);
 	player.map_square = new_vector(floor(player.position.x),
 			floor(player.position.y));
@@ -38,27 +39,35 @@ void	engine(t_player player, t_map map, t_img *img)
 		set_distances_to_sides(&player, &this);
 		dda_find_wall(&this, map.matrix);
 		calculate_distances_to_wall(&player, &this);
-		draw_wall_line(&this, map, img);
+		draw_wall_line(&this, map, pixel_num, img);
 	}
 }
 
-static void	draw_wall_line(t_engine *this, t_map map, t_img *img)
+static void	draw_wall_line(t_engine *this, t_map map, int pixel_num, t_img *img)
 {
-	if (this->wall_direction == EAST)
+	int	y;
+
+	this->text_x = this->wall_hit_x * TEXTURE_SIZE;
+	if ((this->wall_direction == EAST || this->wall_direction == WEST
+			&& (this->ray_dir.x > 0)) || 
+		(this->wall_direction == NORTH || this->wall_direction == SOUTH
+			&& (this->ray_dir.y > 0)))
+		this->text_x = TEXTURE_SIZE - this->text_x - 1;
+	y = HEIGHT / 2 - this->line_height / 2;
+	while (y < this->line_height)
 	{
-		//? Apply East Texture
-	}
-	else if (this->wall_direction == WEST)
-	{
-		//? Apply West Texture
-	}
-	else if (this->wall_direction == NORTH)
-	{
-		//? Apply North Texture
-	}
-	else
-	{
-		//? Apply South Texture
+		if (this->wall_direction == EAST)
+			this->pixel_color = map.east_texture[this->text_y][this->text_x];
+		else if (this->wall_direction == WEST)
+			this->pixel_color = map.west_texture[this->text_y][this->text_x];
+		else if (this->wall_direction == NORTH)
+			this->pixel_color = map.north_texture[this->text_y][this->text_x];
+		else
+			this->pixel_color = map.south_texture[this->text_y][this->text_x];
+		if (y > 0 && y < HEIGHT)
+			my_mlx_pixel_put(img, new_vector(pixel_num, y), this->pixel_color);
+		this->text_y += this->text_y_step;
+		y++;
 	}
 }
 
@@ -81,6 +90,12 @@ static void	calculate_distances_to_wall(t_player *player, t_engine *this)
 	this->line_height = (HEIGHT / this->perpendicular_distance);
 	this->texture_y = 0;
 	this->texture_y_step = TEXTURE_SIZE / this->line_height;
+	if (this->wall_direction == WEST || this->wall_direction == EAST)
+		this->wall_hit_x = player->position.y + this->perpendicular_distance
+			/ this->ray_dir.y;
+	else
+		this->wall_hit_x = player->position.x + this->perpendicular_distance
+			/ this->ray_dir.x;
 }
 
 static void	dda_find_wall(t_engine *this, int **map)

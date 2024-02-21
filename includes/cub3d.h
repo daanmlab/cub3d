@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/21 14:56:08 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/21 18:17:19 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,10 +155,11 @@ struct s_engine
 	double		player_to_wall_distance;
 	double		perpendicular_distance;
 	double		line_height;
-	double		texture_y;
-	double		texture_x;
-	double		texture_y_step;
-	double		texture_x_step;
+	double		text_y;
+	double		text_y_step;
+	double		text_x;
+	double		wall_hit_x;
+	unsigned int	pixel_color;
 	bool		wall_hit;
 	t_direction	wall_direction;
 };
