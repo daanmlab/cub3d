@@ -6,13 +6,14 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:31:28 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/22 13:05:50 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:43:53 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	setup_texture(t_engine *this, t_map map, t_player *player, t_img *img)
+void	setup_texture(t_engine *this, t_textures textures, t_player *player,
+			t_img *img)
 {
 	this->text_y = 0;
 	this->text_y_step = TEXTURE_SIZE / this->line_height;
@@ -23,16 +24,16 @@ void	setup_texture(t_engine *this, t_map map, t_player *player, t_img *img)
 			&& (this->ray_dir.y > 0)))
 		this->text_x = TEXTURE_SIZE - this->text_x - 1;
 	if (this->wall_direction == EAST)
-			this->selected_texture = map.east_texture;
-		else if (this->wall_direction == WEST)
-			this->selected_texture = map.west_texture;
-		else if (this->wall_direction == NORTH)
-			this->selected_texture = map.north_texture;
-		else
-			this->selected_texture = map.south_texture;
+		this->selected_texture = textures.east;
+	else if (this->wall_direction == WEST)
+		this->selected_texture = textures.west;
+	else if (this->wall_direction == NORTH)
+		this->selected_texture = textures.north;
+	else
+		this->selected_texture = textures.south;
 }
 
-void	draw_wall_line(t_engine *this, t_map map, t_player *player, t_img *img)
+void	draw_wall_line(t_engine *this, t_player *player, t_img *img)
 {
 	t_vector		tmp;
 	char			*text_pixel;
@@ -44,8 +45,8 @@ void	draw_wall_line(t_engine *this, t_map map, t_player *player, t_img *img)
 	{
 		text_pixel = this->selected_texture.addr
 			+ ((int)this->text_y * this->selected_texture.line_length
-			+ (int)this->text_x
-			* (this->selected_texture.bits_per_pixel / 8));
+				+ (int)this->text_x
+				* (this->selected_texture.bits_per_pixel / 8));
 		color = (unsigned int)text_pixel;
 		if (tmp.y < 0 && tmp.y > HEIGHT)
 			break ;
@@ -70,7 +71,7 @@ void	calculate_distances_to_wall(t_player *player, t_engine *this)
 			/ this->ray_dir.y
 			* v_magnitude(this->ray_dir);
 	this->perpendicular_distance = this->player_to_wall_distance 
-			/ v_magnitude(this->ray_dir);
+		/ v_magnitude(this->ray_dir);
 	this->line_height = (HEIGHT / this->perpendicular_distance);
 	if (this->wall_direction == WEST || this->wall_direction == EAST)
 		this->wall_hit_x = player->position.y + this->perpendicular_distance
@@ -136,4 +137,3 @@ void	set_distances_to_sides(t_player *player, t_engine *this)
 		this->step_y = -1;
 	}
 }
-

@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/22 13:05:34 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:42:05 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,29 +65,26 @@ typedef struct s_map
     char *south_texture;
     char *west_texture;
     char *east_texture;
-    struct s_position size;
     t_rectangle ceiling;
     t_rectangle floor;
 } t_map;
 
 typedef struct s_textures
 {
-    struct s_img north;
-    struct s_img south;
-    struct s_img west;
-    struct s_img east;
+    t_img north;
+    t_img south;
+    t_img west;
+    t_img east;
 } t_textures;
 
 typedef struct s_game
 {
-    struct s_map map;
-    struct s_textures textures;
-    struct s_color  ceiling_color;
-    struct s_color  floor_color;
-    struct s_player player;
-    void			*mlx;
-	void			*mlx_win;
-    int y;
+    t_map		map;
+    t_textures	textures;
+    t_player	player;
+    void		*mlx;
+	void		*mlx_win;
+	t_img		frame;
 } t_game;
 
 
@@ -135,6 +132,7 @@ struct s_player
 	t_vector	map_square;
 	t_vector	direction;
 	t_vector	plane;
+	double		velocity;
 	double		pov_rotation_x_axis;
 	double		pov_rotation_y_axis;
 };
@@ -190,8 +188,9 @@ t_rectangle	new_rectangle(unsigned int width, unsigned int height,
 
 void	draw_floor_and_ceiling(t_map map, t_player player, t_img *img);
 
-void	draw_wall_line(t_engine *this, t_map map, t_player *player, t_img *img);
-void	setup_texture(t_engine *this, t_map map, t_player *player, t_img *img);
+void	draw_wall_line(t_engine *this, t_player *player, t_img *img);
+void	setup_texture(t_engine *this, t_textures textures, t_player *player,
+			t_img *img);
 void	calculate_distances_to_wall(t_player *player, t_engine *this);
 void	dda_find_wall(t_engine *this, int **map);
 void	set_distances_to_sides(t_player *player, t_engine *this);
