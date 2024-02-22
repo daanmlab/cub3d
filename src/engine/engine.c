@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:43:12 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/22 13:30:43 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:34:43 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	engine(t_player player, t_map map, t_img *img)
 {
-	static t_engine	this;
+	t_engine	this;
 
 	draw_floor_and_ceiling(map, player, img);
 	player.map_square = new_vector(floor(player.position.x),
