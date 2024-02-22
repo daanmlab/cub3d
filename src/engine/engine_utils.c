@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:31:28 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/22 17:43:53 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/22 23:50:43 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	draw_wall_line(t_engine *this, t_player *player, t_img *img)
 	unsigned int	color;
 
 	tmp.x = this->pixel;
-	tmp.y = (HEIGHT / 2 - this->line_height / 2) * player->pov_rotation_y_axis;
+	tmp.y = ((HEIGHT / 2 * player->pov_rotation_y_axis) - this->line_height / 2)
+		* player->pov_rotation_y_axis;
 	while (tmp.y < this->line_height * player->pov_rotation_y_axis)
 	{
 		text_pixel = this->selected_texture.addr
