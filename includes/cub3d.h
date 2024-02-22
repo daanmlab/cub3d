@@ -6,18 +6,23 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/15 21:53:39 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:42:05 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <stdbool.h>
 
+# define WIDTH 1080
+# define HEIGHT 720
+# define TEXTURE_SIZE 32
 
 typedef struct s_position
 {
@@ -25,12 +30,13 @@ typedef struct s_position
     int x;
 } t_position;
 
-enum Direction{
-    NORTH = 'N',
-    SOUTH = 'S',
-    EAST = 'S',
-    WEST = 'W'
-};
+typedef enum e_direction
+{
+    NORTH,
+    SOUTH,
+    EAST,
+    WEST
+}	t_direction;
 
 typedef struct s_color
 {
@@ -52,12 +58,6 @@ typedef struct s_img
     int             y;
 }					t_img;
 
-typedef struct s_player
-{
-    struct s_position    initial_postion;
-    enum Direction initial_direction;
-} t_player;
-
 typedef struct s_map
 {
     char **matrix;
@@ -65,29 +65,26 @@ typedef struct s_map
     char *south_texture;
     char *west_texture;
     char *east_texture;
-    struct s_position size;
-    struct s_color ceiling_color;
-    struct s_color floor_color;
+    t_rectangle ceiling;
+    t_rectangle floor;
 } t_map;
 
 typedef struct s_textures
 {
-    struct s_img north;
-    struct s_img south;
-    struct s_img west;
-    struct s_img east;
+    t_img north;
+    t_img south;
+    t_img west;
+    t_img east;
 } t_textures;
 
 typedef struct s_game
 {
-    struct s_map map;
-    struct s_textures textures;
-    struct s_color  ceiling_color;
-    struct s_color  floor_color;
-    struct s_player player;
-    void			*mlx;
-	void			*mlx_win;
-    int y;
+    t_map		map;
+    t_textures	textures;
+    t_player	player;
+    void		*mlx;
+	void		*mlx_win;
+	t_img		frame;
 } t_game;
 
 
@@ -120,6 +117,8 @@ void free_matrix(char **matrix);
 
 typedef struct s_vector	t_vector;
 typedef struct s_player	t_player;
+typedef struct s_engine t_engine;
+typedef struct s_rectangle	t_rectangle;
 
 struct s_vector
 {
@@ -130,15 +129,70 @@ struct s_vector
 struct s_player
 {
 	t_vector	position;
+	t_vector	map_square;
 	t_vector	direction;
+	t_vector	plane;
+	double		velocity;
+	double		pov_rotation_x_axis;
+	double		pov_rotation_y_axis;
+};
+
+struct s_engine
+{
+	t_vector		ray_dir;
+	t_vector		wall_square;
+	double			plane_multiplier;
+	double			delta_x;
+	double			delta_y;
+	double			dist_to_side_x;
+	double			dist_to_side_y;
+	double			step_x;
+	double			step_y;
+	double			dda_distance_x;
+	double			dda_distance_y;
+	double			player_to_wall_distance;
+	double			perpendicular_distance;
+	double			line_height;
+	double			text_y;
+	double			text_y_step;
+	double			text_x;
+	double			wall_hit_x;
+	unsigned int	pixel;
+	bool			wall_hit;
+	t_direction		wall_direction;
+	t_img			selected_texture;
+};
+
+struct s_rectangle
+{
+	t_vector		start;
+	unsigned int	width;
+	unsigned int	height;
+	unsigned int	color;
 };
 
 //* Vector Functions
 
 t_vector	new_vector(double x, double y);
 t_vector	v_sum(t_vector v1, t_vector v2);
-t_vector	v_mult(t_vector v1, t_vector v2);
+t_vector	v_mult(t_vector v1, double scalar);
 t_vector	v_normalize(t_vector v);
 t_vector	v_rotate(t_vector v1, double angle);
+double		v_magnitude(t_vector v);
+
+void		line(t_img *img, t_vector start, t_vector end, int color);
+void		rectangle(t_img *img, t_rectangle rectangle);
+void		my_mlx_pixel_put(t_img *img, t_vector vector, unsigned int color);
+t_rectangle	new_rectangle(unsigned int width, unsigned int height,
+		unsigned int color);
+
+void	draw_floor_and_ceiling(t_map map, t_player player, t_img *img);
+
+void	draw_wall_line(t_engine *this, t_player *player, t_img *img);
+void	setup_texture(t_engine *this, t_textures textures, t_player *player,
+			t_img *img);
+void	calculate_distances_to_wall(t_player *player, t_engine *this);
+void	dda_find_wall(t_engine *this, int **map);
+void	set_distances_to_sides(t_player *player, t_engine *this);
 
 #endif

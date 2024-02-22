@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:29:53 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/15 21:04:41 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/22 17:11:46 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	create_textures(t_game *game)
 	images[3] = &game->textures.east;
 
 	if (!check_enough_textures(game))
-		return ft_printf("not enough textures") && !!free_textures(game);
+		return write(2, "not enough textures\n", 20) && !!free_textures(game);
 	i = 0;
 	while (i < 4 && create_img(game, images[i], textures[i]))
 		i++;
