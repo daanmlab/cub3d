@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/21 18:17:19 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/22 01:48:49 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,27 +141,28 @@ struct s_player
 
 struct s_engine
 {
-	t_vector	ray_dir;
-	t_vector	wall_square;
-	double		plane_multiplier;
-	double		delta_x;
-	double		delta_y;
-	double		dist_to_side_x;
-	double		dist_to_side_y;
-	double		step_x;
-	double		step_y;
-	double		dda_distance_x;
-	double		dda_distance_y;
-	double		player_to_wall_distance;
-	double		perpendicular_distance;
-	double		line_height;
-	double		text_y;
-	double		text_y_step;
-	double		text_x;
-	double		wall_hit_x;
-	unsigned int	pixel_color;
-	bool		wall_hit;
-	t_direction	wall_direction;
+	t_vector		ray_dir;
+	t_vector		wall_square;
+	double			plane_multiplier;
+	double			delta_x;
+	double			delta_y;
+	double			dist_to_side_x;
+	double			dist_to_side_y;
+	double			step_x;
+	double			step_y;
+	double			dda_distance_x;
+	double			dda_distance_y;
+	double			player_to_wall_distance;
+	double			perpendicular_distance;
+	double			line_height;
+	double			text_y;
+	double			text_y_step;
+	double			text_x;
+	double			wall_hit_x;
+	unsigned int	pixel;
+	bool			wall_hit;
+	t_direction		wall_direction;
+	t_img			selected_texture;
 };
 
 struct s_rectangle
