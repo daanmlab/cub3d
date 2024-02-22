@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/22 01:48:49 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:05:34 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,5 +189,11 @@ t_rectangle	new_rectangle(unsigned int width, unsigned int height,
 		unsigned int color);
 
 void	draw_floor_and_ceiling(t_map map, t_player player, t_img *img);
+
+void	draw_wall_line(t_engine *this, t_map map, t_player *player, t_img *img);
+void	setup_texture(t_engine *this, t_map map, t_player *player, t_img *img);
+void	calculate_distances_to_wall(t_player *player, t_engine *this);
+void	dda_find_wall(t_engine *this, int **map);
+void	set_distances_to_sides(t_player *player, t_engine *this);
 
 #endif

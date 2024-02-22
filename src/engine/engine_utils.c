@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:31:28 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/22 01:55:07 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:05:50 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	draw_wall_line(t_engine *this, t_map map, t_player *player, t_img *img)
 	}
 }
 
-static void	calculate_distances_to_wall(t_player *player, t_engine *this)
+void	calculate_distances_to_wall(t_player *player, t_engine *this)
 {
 	if (this->wall_direction == WEST || this->wall_direction == EAST)
 		this->player_to_wall_distance = fabs(player->position.x
@@ -80,7 +80,7 @@ static void	calculate_distances_to_wall(t_player *player, t_engine *this)
 			/ this->ray_dir.x;
 }
 
-static void	dda_find_wall(t_engine *this, int **map)
+void	dda_find_wall(t_engine *this, int **map)
 {
 	this->dda_distance_x = this->dist_to_side_x;
 	this->dda_distance_y = this->dist_to_side_y;
@@ -109,7 +109,7 @@ static void	dda_find_wall(t_engine *this, int **map)
 	}
 }
 
-static void	set_distances_to_sides(t_player *player, t_engine *this)
+void	set_distances_to_sides(t_player *player, t_engine *this)
 {
 	if (this->ray_dir.x > 0)
 	{

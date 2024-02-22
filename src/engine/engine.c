@@ -6,17 +6,11 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:43:12 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/22 01:41:01 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/22 13:30:43 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-static void	set_distances_to_sides(t_player *player, t_engine *this);
-static void	calculate_distances_to_wall(t_player *player, t_engine *this);
-static void	dda_find_wall(t_engine *this, int **map);
-static void	draw_wall_line(t_engine *this, t_map map, t_player player,
-				t_img *img);
 
 void	engine(t_player player, t_map map, t_img *img)
 {
@@ -29,7 +23,7 @@ void	engine(t_player player, t_map map, t_img *img)
 	this.plane_multiplier = 2 / WIDTH;
 	this.wall_hit = false;
 	this.pixel = 0;
-	while (this.pixel <= WIDTH)
+	while (this.pixel < WIDTH)
 	{
 		this.ray_dir = v_sum(player.direction, 
 				v_mult(player.plane, -1 + this.pixel * this.plane_multiplier));
@@ -38,8 +32,8 @@ void	engine(t_player player, t_map map, t_img *img)
 		set_distances_to_sides(&player, &this);
 		dda_find_wall(&this, map.matrix);
 		calculate_distances_to_wall(&player, &this);
-		setup_texture();
-		draw_wall_line(&this, map, player, img);
+		setup_texture(&this, map, &player, img);
+		draw_wall_line(&this, map, &player, img);
 		this.pixel++;
 	}
 }
