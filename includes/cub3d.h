@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/22 17:42:05 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/22 23:56:04 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,7 @@
 
 # define WIDTH 1080
 # define HEIGHT 720
-# define TEXTURE_SIZE 32
-
-typedef struct s_position
-{
-    int y;
-    int x;
-} t_position;
+# define TEXTURE_SIZE 64
 
 typedef enum e_direction
 {
@@ -60,11 +54,12 @@ typedef struct s_img
 
 typedef struct s_map
 {
-    char **matrix;
-    char *north_texture;
-    char *south_texture;
-    char *west_texture;
-    char *east_texture;
+    int 		**matrix;
+    char 		*north_texture;
+    char 		*south_texture;
+    char 		*west_texture;
+    char 		*east_texture;
+	t_vector	size;
     t_rectangle ceiling;
     t_rectangle floor;
 } t_map;

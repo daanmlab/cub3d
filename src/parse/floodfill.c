@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floodfill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 16:06:46 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/15 20:44:44 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/22 23:56:44 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_been_matrix(int **been, t_map *map)
 
 static void print_matrix(t_map *map, int **been)
 {
-    struct s_position curr;
+    t_vector curr;
 
     curr.y = 0;
     while (curr.y < map->size.y)
@@ -42,18 +42,18 @@ static void print_matrix(t_map *map, int **been)
         curr.x = 0;
         while (curr.x < map->size.x)
         {
-            if (been[curr.y][curr.x])
+            if (been[(int)curr.y][(int)curr.x])
             {
-                if (map->matrix[curr.y][curr.x] == ' ' || map->matrix[curr.y][curr.x] == '\0')
+                if (map->matrix[(int)curr.y][(int)curr.x] == ' ' || map->matrix[(int)curr.y][(int)curr.x] == '\0')
                     ft_printf("\033[1;31m*\033[0m");
                 else
-                    if (curr.y == 0 || !map->matrix[curr.y + 1] || curr.x == 0 || !map->matrix[curr.y][curr.x + 1])
-                        ft_printf("\033[1;31m%c\033[0m", map->matrix[curr.y][curr.x]);
+                    if (curr.y == 0 || !map->matrix[(int)curr.y + 1] || curr.x == 0 || !map->matrix[(int)curr.y][(int)curr.x + 1])
+                        ft_printf("\033[1;31m%c\033[0m", map->matrix[(int)curr.y][(int)curr.x]);
                     else
-                        ft_printf("\033[1;36m%c\033[0m", map->matrix[curr.y][curr.x]);
+                        ft_printf("\033[1;36m%c\033[0m", map->matrix[(int)curr.y][(int)curr.x]);
             }
             else
-                ft_printf("%c", map->matrix[curr.y][curr.x]);
+                ft_printf("%c", map->matrix[(int)curr.y][(int)curr.x]);
             curr.x++;
         }
         ft_printf("\n");
@@ -118,7 +118,7 @@ int do_floodfill(t_game *game)
 
     ft_printf("y: %d, x: %d\n", game->map.size.y, game->map.size.x);
     been = create_been_matrix(&game->map);
-    if (!been || !floodfill(&game->map, been, game->player.initial_postion.x, game->player.initial_postion.y))
+    if (!been || !floodfill(&game->map, been, game->player.position.x, game->player.position.y))
         return 0;
     return 1;
 }
