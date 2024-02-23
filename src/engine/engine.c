@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:43:12 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/22 17:43:29 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/23 23:49:05 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	engine(t_game *game)
 {
 	t_engine	this;
 
-	draw_floor_and_ceiling(game->map, game->player, &game->frame);
+	draw_floor_and_ceiling(game, game->map, game->player, &game->frame);
 	game->player.map_square = new_vector(floor(game->player.position.x),
 			floor(game->player.position.y));
 	this.wall_square = new_vector(game->player.map_square.x,

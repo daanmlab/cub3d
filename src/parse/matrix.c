@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   matrix.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:34:10 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/15 20:33:33 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/23 21:00:16 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,25 @@ int standardize_matrix(t_map *map)
         free(temp);
         i++;
     }
+
+	
+	for (int i = 0; i < map->size.y; i++) 
+	{
+		for (int j = 0; j < map->size.x; j++) 
+			printf("%c", map->matrix[i][j]);
+		printf("\n");
+	}
+	
+	// map->real_map = ft_calloc(map->size.y, sizeof(int *));
+	// for (int i = 0; i < map->size.y; i++)
+	// {
+	// 	map->real_map[i] = ft_calloc(map->size.x, sizeof(int));
+	// 	for (int j = 0; j < map->size.x; j++)
+	// 	{
+	// 		if (map->matrix[i][j] == '')
+	// 		map->real_map[i][j] = map->matrix[i][j] == '1' ? 1 : 0;
+	// 	}
+	// }
     return 1;
 }
 
@@ -59,20 +78,20 @@ char **realloc_matrix(char **matrix)
     return new_matrix;
 }
 
-static void print_matrix(char **matrix, struct s_position pos)
+static void print_matrix(char **matrix, t_vector pos)
 {
-    struct s_position curr;
+    t_vector curr;
 
     curr.y = 0;
-    while (matrix[curr.y])
+    while (matrix[(int)curr.y])
     {
         curr.x = 0;
-        while (matrix[curr.y][curr.x])
+        while (matrix[(int)curr.y][(int)curr.x])
         {
             if (curr.y == pos.y && curr.x == pos.x)
-                ft_printf("\033[1;31m%c\033[0m", matrix[curr.y][curr.x]);
+                ft_printf("\033[1;31m%c\033[0m", matrix[(int)curr.y][(int)curr.x]);
             else
-                ft_printf("%c", matrix[curr.y][curr.x]);
+                ft_printf("%c", matrix[(int)curr.y][(int)curr.x]);
             curr.x++;
         }
         ft_printf("\n");
@@ -110,20 +129,20 @@ int set_matrix(int fd, t_map *map)
 */
 int check_matrix(t_game *game)
 {
-    struct s_position curr;
+    t_vector curr;
     char *allowed_chars;
 
     allowed_chars = "01NSEW ";
 
     curr.y = 0;
-    while (game->map.matrix[curr.y])
+    while (game->map.matrix[(int)curr.y])
     {
         curr.x = 0;
-        while (game->map.matrix[curr.y][curr.x])
+        while (game->map.matrix[(int)curr.y][(int)curr.x])
         {
-            if (!ft_strchr(allowed_chars, game->map.matrix[curr.y][curr.x]))
+            if (!ft_strchr(allowed_chars, game->map.matrix[(int)curr.y][(int)curr.x]))
             {
-                ft_printf("bad char: '%c'; at %d,%d\n", game->map.matrix[curr.y][curr.x], curr.y, curr.x);
+                ft_printf("bad char: '%c'; at %d,%d\n", game->map.matrix[(int)curr.y][(int)curr.x], curr.y, curr.x);
                 print_matrix(game->map.matrix, curr);
                 return 0;
             }

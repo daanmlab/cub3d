@@ -39,8 +39,8 @@ SRC = $(addprefix $(SRC_PATH), \
 		vectors/vectors_utils.c \
 		vectors.vectors_utils2.c \
 		engine/engine.c \
-		drawing_utils.c
-)
+		engine/engine_utils.c \
+		drawing_utils.c)
 
 $(OBJ): $(OBJ_PATH)
 

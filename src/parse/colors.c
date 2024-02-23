@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:41:50 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/15 20:39:44 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/23 23:41:07 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int extract_color(const char *temp, t_color *color)
     str = ft_strtrim(temp, "\n ");
     i = 0;
     if (!is_color(str))
-        return (free(str), ft_printf("invalid color: %s;\n", str));
+        return (free(str), ft_printf("invalid color: %s\n", str));
     split = ft_split(str, ',');
     while (split[i])
         i++;
@@ -40,7 +40,6 @@ int extract_color(const char *temp, t_color *color)
     color->r = ft_atoi(split[0]);
     color->g = ft_atoi(split[1]);
     color->b = ft_atoi(split[2]);
-    // ft_printf("r: %d, g: %d, b: %d\n", color->r, color->g, color->b);
     ft_free_tab(split);
     if (color->r > 255 || color->g > 255 || color->b > 255)
         return ((ft_printf("invalid color: %s;\n", str), free(str), 0));

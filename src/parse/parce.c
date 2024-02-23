@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parce.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:46:23 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/15 18:13:43 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/23 20:56:07 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,17 @@ int	parse(int argc, char const *argv[], t_game *game)
 	int	fd;
 
 	if (!check_args(argc, argv))
-		return (0);
+		return (-1);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		return (ft_printf("file doesn't exist\n") && 0);
+		return (perror("Error: "), -1);
 	if (!get_textures(fd, game))
-		return 0;
+		return (-1);
 	if (!get_colors(fd, game))
 		return !!free_textures(game);
 	if (!get_matrix(fd, game))
 		return !!free_textures(game);
-	if (!get_player(game))
+	if (!find_player(game))
 		return  free_matrix(game->map.matrix), !!free_textures(game);
 	if (!do_floodfill(game))
 		return free_matrix(game->map.matrix), !!free_textures(game);
