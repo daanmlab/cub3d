@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/22 23:56:04 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/23 23:50:16 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdbool.h>
+# include <stdio.h>
 
 # define WIDTH 1080
 # define HEIGHT 720
@@ -39,7 +40,7 @@ typedef struct s_color
     unsigned int b;
     unsigned int  color;
     int error;
-} t_color;
+}	t_color;
 
 typedef struct s_img
 {
@@ -50,11 +51,12 @@ typedef struct s_img
 	int				line_length;
     int             x;
     int             y;
-}					t_img;
+}	t_img;
 
 typedef struct s_map
 {
-    int 		**matrix;
+	char		**matrix;
+    int 		**real_map;
     char 		*north_texture;
     char 		*south_texture;
     char 		*west_texture;
@@ -62,7 +64,7 @@ typedef struct s_map
 	t_vector	size;
     t_rectangle ceiling;
     t_rectangle floor;
-} t_map;
+}	t_map;
 
 typedef struct s_textures
 {
@@ -70,17 +72,19 @@ typedef struct s_textures
     t_img south;
     t_img west;
     t_img east;
-} t_textures;
+}	t_textures;
 
 typedef struct s_game
 {
+	t_color		floor_color;
+	t_color		ceiling_color;
     t_map		map;
     t_textures	textures;
     t_player	player;
     void		*mlx;
 	void		*mlx_win;
 	t_img		frame;
-} t_game;
+}	t_game;
 
 
 /**
@@ -90,7 +94,7 @@ int parse(int argc, char const *argv[], t_game *game);
 int get_textures(int fd, t_game *game);
 int	get_colors(int fd, t_game *game);
 int get_matrix(int fd, t_game *game);
-int get_player(t_game *game);
+int find_player(t_game* game);
 int do_floodfill(t_game *game);
 void	*free_textures(t_game *game);
 
@@ -181,7 +185,8 @@ void		my_mlx_pixel_put(t_img *img, t_vector vector, unsigned int color);
 t_rectangle	new_rectangle(unsigned int width, unsigned int height,
 		unsigned int color);
 
-void	draw_floor_and_ceiling(t_map map, t_player player, t_img *img);
+void	draw_floor_and_ceiling(t_game *game, t_map map, t_player player,
+			 t_img *img);
 
 void	draw_wall_line(t_engine *this, t_player *player, t_img *img);
 void	setup_texture(t_engine *this, t_textures textures, t_player *player,

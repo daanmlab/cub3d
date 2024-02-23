@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:29:53 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/22 17:11:46 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/23 20:28:41 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int	create_textures(t_game *game)
 	images[1] = &game->textures.south;
 	images[2] = &game->textures.west;
 	images[3] = &game->textures.east;
-
 	if (!check_enough_textures(game))
 		return write(2, "not enough textures\n", 20) && !!free_textures(game);
 	i = 0;
