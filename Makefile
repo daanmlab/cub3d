@@ -40,7 +40,8 @@ SRC = $(addprefix $(SRC_PATH), \
 		vectors/vectors_utils2.c \
 		engine/engine.c \
 		engine/engine_utils.c \
-		drawing_utils.c)
+		drawing_utils.c \
+		events/events.c) 
 
 $(OBJ): $(OBJ_PATH)
 
@@ -57,6 +58,7 @@ $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)/parse
 	@mkdir -p $(OBJ_PATH)/vectors
 	@mkdir -p $(OBJ_PATH)/engine
+	@mkdir -p $(OBJ_PATH)/events
 
 
 $(LIBFT):

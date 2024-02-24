@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/24 12:24:55 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/24 14:36:33 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <stdbool.h>
 # include <stdio.h>
+# include <X11/keysym.h>
 
 # define WIDTH 1080
 # define HEIGHT 720
@@ -47,9 +48,13 @@ typedef struct s_player
 	t_vector	map_square;
 	t_vector	direction;
 	t_vector	plane;
-	double		velocity;
-	double		pov_rotation_x_axis;
-	double		pov_rotation_y_axis;
+	bool		is_walking;
+	bool		is_walking_back;
+	bool		is_running;
+	bool		is_looking_right;
+	bool		is_looking_left;
+	int		pov_rotation_x_axis;
+	int		pov_rotation_y_axis;
 }	t_player;
 
 
@@ -196,6 +201,14 @@ void	calculate_distances_to_wall(t_player *player, t_engine *this);
 void	dda_find_wall(t_engine *this, int **map);
 void	set_distances_to_sides(t_player *player, t_engine *this);
 
-int		engine(t_game *game);
+int		render_next_frame(t_game *game);
+
+
+//* Constructors
+
+t_player player_constructor(void);
+
+int catch_key_press(int key, t_player *player);
+int catch_key_release(int key, t_player *player);
 
 #endif

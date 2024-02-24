@@ -6,25 +6,24 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:43:12 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/24 12:28:19 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/24 14:36:53 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	engine(t_game *game)
+static t_engine	engine_constructor(void);
+static void	apply_changes_on_player(t_player *player);
+
+int	render_next_frame(t_game *game)
 {
 	t_engine	this;
 
-	game->player.pov_rotation_y_axis = 1.0;
+	this = engine_constructor();
+	apply_changes_on_player(&game->player);
 	draw_floor_and_ceiling(game, game->map, game->player, &game->frame);
-	game->player.map_square = new_vector(floor(game->player.position.x),
-			floor(game->player.position.y));
 	this.wall_square = new_vector(game->player.map_square.x,
 			game->player.map_square.y);
-	this.plane_multiplier = 2.0 / WIDTH;
-	this.wall_hit = false;
-	this.pixel = 0;
 	while (this.pixel < WIDTH)
 	{
 		this.ray_dir = v_sum(game->player.direction,
@@ -41,4 +40,43 @@ int	engine(t_game *game)
 	}
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->frame.img, 0, 0);
 	return (0);
+}
+
+static void	apply_changes_on_player(t_player *player)
+{
+	if (player->is_walking)
+		player->position = v_sum(player->position, v_mult(player->direction, 0.01));
+	if (player->is_walking_back)
+		player->position = v_sum(player->position, v_mult(player->direction, -0.01));
+	if (player->is_looking_left)
+	{
+		player->plane = v_rotate(player->plane, 0.01);
+		player->direction = v_rotate(player->direction, 0.01);
+	}
+
+}
+
+static t_engine	engine_constructor(void)
+{
+	t_engine	new;
+
+	new.dda_distance_x = 0;
+	new.dda_distance_y = 0;
+	new.delta_x = 0;
+	new.delta_y = 0;
+	new.dist_to_side_x = 0;
+	new.dist_to_side_y = 0;
+	new.line_height = 0;
+	new.perpendicular_distance = 0;
+	new.pixel = 0;
+	new.plane_multiplier = 2.0 / WIDTH;
+	new.player_to_wall_distance = 0;
+	new.step_x = 0;
+	new.step_y = 0;
+	new.text_x = 0;
+	new.text_y = 0;
+	new.text_y_step = 0;
+	new.wall_hit = false;
+	new.wall_hit_x = 0;
+	return (new);
 }
