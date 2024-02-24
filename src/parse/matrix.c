@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:34:10 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/23 21:00:16 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/24 01:08:50 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,28 @@ int standardize_matrix(t_map *map)
         map->matrix[i] = ft_calloc(map->size.x + 1, sizeof(char));
         if (!map->matrix[i])
             return (ft_printf("malloc failed") && 0);
-        ft_strlcpy(map->matrix[i], temp, map->size.x);
+        ft_strlcpy(map->matrix[i], temp, map->size.x + 1);
         free(temp);
         i++;
     }
-
-	
-	for (int i = 0; i < map->size.y; i++) 
+	map->real_map = ft_calloc(map->size.y, sizeof(int *));
+	for (int i = 0; i < map->size.y; i++)
 	{
-		for (int j = 0; j < map->size.x; j++) 
-			printf("%c", map->matrix[i][j]);
-		printf("\n");
+		map->real_map[i] = ft_calloc(map->size.x, sizeof(int));
+		for (int j = 0; j < map->size.x; j++)
+		{
+			if (map->matrix[i][j] == '1')
+				map->real_map[i][j] = 1;
+			else
+				map->real_map[i][j] = 0;
+		}
 	}
-	
-	// map->real_map = ft_calloc(map->size.y, sizeof(int *));
-	// for (int i = 0; i < map->size.y; i++)
-	// {
-	// 	map->real_map[i] = ft_calloc(map->size.x, sizeof(int));
-	// 	for (int j = 0; j < map->size.x; j++)
-	// 	{
-	// 		if (map->matrix[i][j] == '')
-	// 		map->real_map[i][j] = map->matrix[i][j] == '1' ? 1 : 0;
-	// 	}
-	// }
+	for (int i = 0; i < map->size.y; i++)
+	{
+		for (int j = 0; j < map->size.x; j++)
+			ft_printf("%d ", map->real_map[i][j]);
+		ft_printf("\n");
+	}
     return 1;
 }
 
@@ -107,16 +106,17 @@ int set_matrix(int fd, t_map *map)
     
     i = 0;
     x = 0;
-    line = get_next_line(fd);
     map->matrix = ft_calloc(2, sizeof(char *));
-    while (line)
+    while (1)
     {
+		line = get_next_line(fd);
+		if (!line)
+			break ;
         map->matrix[i] = ft_strtrim(line, "\n");
-        if (map->matrix[i] && ft_strlen(map->matrix[i]) > x)
+        if (ft_strlen(map->matrix[i]) > x)
             x = ft_strlen(map->matrix[i]);
         map->matrix = realloc_matrix(map->matrix);
         free(line);
-        line = get_next_line(fd);
         i++;
     }
     map->size.y = i;

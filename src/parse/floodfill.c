@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 16:06:46 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/22 23:56:44 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/24 01:09:07 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void clear_screen()
 {
-  const char *CLEAR_SCREEN_ANSI = "\e[1;1H\e[2J";
-  write(STDOUT_FILENO, CLEAR_SCREEN_ANSI, 10);
+  char *CLEAR_SCREEN_ANSI = "\e[1;1H\e[2J";
+  ft_putstr_fd(CLEAR_SCREEN_ANSI, 1);
 }
 
 void	free_been_matrix(int **been, t_map *map)

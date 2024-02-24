@@ -1,0 +1,13 @@
+NO ./test_textures/north.xpm
+SO ./test_textures/south.xpm
+WE ./test_textures/west.xpm
+EA ./test_textures/east.xpm
+
+C 225,30,0
+F 220,100,0
+
+1111111111111111
+1000000000000001
+1000000N00000001
+1000000000000001
+1111111111111111

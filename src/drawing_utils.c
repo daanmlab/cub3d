@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:10:27 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/23 23:49:54 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/24 01:32:41 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ void	rectangle(t_img *img, t_rectangle rectangle)
 
 	tmp = new_vector(rectangle.start.x, rectangle.start.y);
 	i = 0;
-	while (i < rectangle.height)
+	while (i < (int)rectangle.height)
 	{
 		j = 0;
-		while (j < rectangle.width)
+		while (j < (int)rectangle.width)
 		{
-			tmp.x = rectangle.start.x * j;
-			tmp.y = rectangle.start.y * i;
+			tmp.x = rectangle.start.x + j;
+			tmp.y = rectangle.start.y + i;
 			if (tmp.x < WIDTH && tmp.y < HEIGHT)
 				my_mlx_pixel_put(img, tmp, rectangle.color);
 			else if (tmp.x > WIDTH && tmp.y > HEIGHT)
@@ -91,7 +91,7 @@ void	draw_floor_and_ceiling(t_game *game, t_map map, t_player player,
 	map.ceiling.height = HEIGHT;
 	map.ceiling.width = WIDTH;
 	map.ceiling.color = game->ceiling_color.color;
-	map.floor.start = new_vector(0, HEIGHT / 2 * player.pov_rotation_y_axis);
+	map.floor.start = new_vector(0, HEIGHT / 2 + player.pov_rotation_y_axis);
 	map.floor.height = HEIGHT;
 	map.floor.width = WIDTH;
 	map.floor.color = game->floor_color.color;

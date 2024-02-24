@@ -6,22 +6,21 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:31:28 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/22 23:50:43 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/24 01:48:33 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	setup_texture(t_engine *this, t_textures textures, t_player *player,
-			t_img *img)
+void	setup_texture(t_engine *this, t_textures textures)
 {
 	this->text_y = 0;
 	this->text_y_step = TEXTURE_SIZE / this->line_height;
 	this->text_x = this->wall_hit_x * TEXTURE_SIZE;
-	if ((this->wall_direction == EAST || this->wall_direction == WEST
-			&& (this->ray_dir.x < 0)) || 
-		(this->wall_direction == NORTH || this->wall_direction == SOUTH
-			&& (this->ray_dir.y > 0)))
+	if (((this->wall_direction == EAST || this->wall_direction == WEST)
+			&& this->ray_dir.x < 0) || 
+		((this->wall_direction == NORTH || this->wall_direction == SOUTH)
+			&& this->ray_dir.y > 0))
 		this->text_x = TEXTURE_SIZE - this->text_x - 1;
 	if (this->wall_direction == EAST)
 		this->selected_texture = textures.east;
@@ -40,7 +39,7 @@ void	draw_wall_line(t_engine *this, t_player *player, t_img *img)
 	unsigned int	color;
 
 	tmp.x = this->pixel;
-	tmp.y = ((HEIGHT / 2 * player->pov_rotation_y_axis) - this->line_height / 2)
+	tmp.y = ((HEIGHT / 2.0 * player->pov_rotation_y_axis) - this->line_height / 2.0)
 		* player->pov_rotation_y_axis;
 	while (tmp.y < this->line_height * player->pov_rotation_y_axis)
 	{
@@ -48,7 +47,7 @@ void	draw_wall_line(t_engine *this, t_player *player, t_img *img)
 			+ ((int)this->text_y * this->selected_texture.line_length
 				+ (int)this->text_x
 				* (this->selected_texture.bits_per_pixel / 8));
-		color = (unsigned int)text_pixel;
+		color = *(unsigned int *)text_pixel;
 		if (tmp.y < 0 && tmp.y > HEIGHT)
 			break ;
 		my_mlx_pixel_put(img, tmp, color);
@@ -62,18 +61,18 @@ void	calculate_distances_to_wall(t_player *player, t_engine *this)
 	if (this->wall_direction == WEST || this->wall_direction == EAST)
 		this->player_to_wall_distance = fabs(player->position.x
 				- this->wall_square.x
-				+ (double)this->step_x == -1)
+				+ (double)(this->step_x == -1.0))
 			/ this->ray_dir.x
 			* v_magnitude(this->ray_dir);
 	else
 		this->player_to_wall_distance = fabs(player->position.y
 				- this->wall_square.y
-				+ (double)this->step_y == -1)
+				+ (double)(this->step_y == -1.0))
 			/ this->ray_dir.y
 			* v_magnitude(this->ray_dir);
 	this->perpendicular_distance = this->player_to_wall_distance 
 		/ v_magnitude(this->ray_dir);
-	this->line_height = (HEIGHT / this->perpendicular_distance);
+	this->line_height = fabs(HEIGHT / this->perpendicular_distance);
 	if (this->wall_direction == WEST || this->wall_direction == EAST)
 		this->wall_hit_x = player->position.y + this->perpendicular_distance
 			/ this->ray_dir.y;
@@ -117,24 +116,24 @@ void	set_distances_to_sides(t_player *player, t_engine *this)
 	{
 		this->dist_to_side_x = (player->map_square.x - player->position.x + 1)
 			/ this->delta_x;
-		this->step_x = 1;
+		this->step_x = 1.0;
 	}
 	else
 	{
 		this->dist_to_side_x = (player->position.x - player->map_square.x)
 			/ this->delta_x;
-		this->step_x = -1;
+		this->step_x = -1.0;
 	}
 	if (this->ray_dir.y > 0)
 	{
 		this->dist_to_side_y = (player->map_square.y - player->position.y + 1)
 			/ this->delta_y;
-		this->step_y = 1;
+		this->step_y = 1.0;
 	}
 	else
 	{
 		this->dist_to_side_y = (player->position.y - player->map_square.y)
 			/ this->delta_y;
-		this->step_y = -1;
+		this->step_y = -1.0;
 	}
 }

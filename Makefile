@@ -37,7 +37,7 @@ SRC = $(addprefix $(SRC_PATH), \
 		parse/player.c \
 		parse/floodfill.c \
 		vectors/vectors_utils.c \
-		vectors.vectors_utils2.c \
+		vectors/vectors_utils2.c \
 		engine/engine.c \
 		engine/engine_utils.c \
 		drawing_utils.c)
@@ -55,6 +55,9 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
 $(OBJ_PATH):
 	@mkdir -p $(OBJ_PATH)
 	@mkdir -p $(OBJ_PATH)/parse
+	@mkdir -p $(OBJ_PATH)/vectors
+	@mkdir -p $(OBJ_PATH)/engine
+
 
 $(LIBFT):
 	@make -sC $(LIBFT_PATH)

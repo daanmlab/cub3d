@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/23 23:50:16 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/24 01:19:10 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,34 @@
 # define WIDTH 1080
 # define HEIGHT 720
 # define TEXTURE_SIZE 64
+
+
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+}	t_vector;
+
+
+typedef struct s_rectangle
+{
+	t_vector		start;
+	unsigned int	width;
+	unsigned int	height;
+	unsigned int	color;
+}	t_rectangle;
+
+typedef struct s_player
+{
+	t_vector	position;
+	t_vector	map_square;
+	t_vector	direction;
+	t_vector	plane;
+	double		velocity;
+	double		pov_rotation_x_axis;
+	double		pov_rotation_y_axis;
+}	t_player;
+
 
 typedef enum e_direction
 {
@@ -76,6 +104,7 @@ typedef struct s_textures
 
 typedef struct s_game
 {
+	const char	*file;
 	t_color		floor_color;
 	t_color		ceiling_color;
     t_map		map;
@@ -114,27 +143,7 @@ void free_matrix(char **matrix);
 
 //? tlouro-c
 
-typedef struct s_vector	t_vector;
-typedef struct s_player	t_player;
 typedef struct s_engine t_engine;
-typedef struct s_rectangle	t_rectangle;
-
-struct s_vector
-{
-	double	x;
-	double	y;
-};
-
-struct s_player
-{
-	t_vector	position;
-	t_vector	map_square;
-	t_vector	direction;
-	t_vector	plane;
-	double		velocity;
-	double		pov_rotation_x_axis;
-	double		pov_rotation_y_axis;
-};
 
 struct s_engine
 {
@@ -162,13 +171,6 @@ struct s_engine
 	t_img			selected_texture;
 };
 
-struct s_rectangle
-{
-	t_vector		start;
-	unsigned int	width;
-	unsigned int	height;
-	unsigned int	color;
-};
 
 //* Vector Functions
 
@@ -189,10 +191,11 @@ void	draw_floor_and_ceiling(t_game *game, t_map map, t_player player,
 			 t_img *img);
 
 void	draw_wall_line(t_engine *this, t_player *player, t_img *img);
-void	setup_texture(t_engine *this, t_textures textures, t_player *player,
-			t_img *img);
+void	setup_texture(t_engine *this, t_textures textures);
 void	calculate_distances_to_wall(t_player *player, t_engine *this);
 void	dda_find_wall(t_engine *this, int **map);
 void	set_distances_to_sides(t_player *player, t_engine *this);
+
+int		engine(t_game *game);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:46:23 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/23 20:56:07 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/24 00:47:06 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	parse(int argc, char const *argv[], t_game *game)
 
 	if (!check_args(argc, argv))
 		return (-1);
-	fd = open(argv[1], O_RDONLY);
+	game->file = argv[1];
+	fd = open(game->file, O_RDONLY);
 	if (fd == -1)
 		return (perror("Error: "), -1);
 	if (!get_textures(fd, game))
