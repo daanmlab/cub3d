@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:10:27 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/24 01:32:41 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/24 11:27:06 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	my_mlx_pixel_put(t_img *img, t_vector vector, unsigned int color)
 {
 	char	*dest;
 
+	if (vector.x < 0 || vector.x > WIDTH || vector.y < 0 || vector.y > HEIGHT)
+		return ;
 	dest = img -> addr + ((int)round(vector.y) * img -> line_length
 			+ (int)round(vector.x) * (img -> bits_per_pixel / 8));
 	*(unsigned int *)dest = color;

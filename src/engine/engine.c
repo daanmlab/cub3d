@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:43:12 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/24 02:18:23 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/24 12:28:19 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	engine(t_game *game)
 {
 	t_engine	this;
 
+	game->player.pov_rotation_y_axis = 1.0;
 	draw_floor_and_ceiling(game, game->map, game->player, &game->frame);
 	game->player.map_square = new_vector(floor(game->player.position.x),
 			floor(game->player.position.y));
@@ -26,9 +27,9 @@ int	engine(t_game *game)
 	this.pixel = 0;
 	while (this.pixel < WIDTH)
 	{
-		this.ray_dir = v_sum(game->player.direction, 
+		this.ray_dir = v_sum(game->player.direction,
 				v_mult(game->player.plane, (double)(-1.0 + this.pixel
-					* this.plane_multiplier)));
+						* this.plane_multiplier)));
 		this.delta_x = fabs(1.0 / this.ray_dir.x + 0.000001);
 		this.delta_y = fabs(1.0 / this.ray_dir.y + 0.000001);
 		set_distances_to_sides(&game->player, &this);
@@ -36,7 +37,6 @@ int	engine(t_game *game)
 		calculate_distances_to_wall(&game->player, &this);
 		setup_texture(&this, game->textures);
 		draw_wall_line(&this, &game->player, &game->frame);
-		printf("pixel: %d\n", this.pixel);
 		this.pixel++;
 	}
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->frame.img, 0, 0);

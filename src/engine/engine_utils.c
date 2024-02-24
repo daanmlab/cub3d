@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:31:28 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/24 02:18:09 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/24 12:27:36 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ void	setup_texture(t_engine *this, t_textures textures)
 	this->text_y_step = TEXTURE_SIZE / this->line_height;
 	this->text_x = this->wall_hit_x * TEXTURE_SIZE;
 	if (((this->wall_direction == EAST || this->wall_direction == WEST)
-			&& this->ray_dir.x < 0) || 
-		((this->wall_direction == NORTH || this->wall_direction == SOUTH)
+			&& this->ray_dir.x < 0)
+		|| ((this->wall_direction == NORTH || this->wall_direction == SOUTH)
 			&& this->ray_dir.y > 0))
 		this->text_x = TEXTURE_SIZE - this->text_x - 1;
 	if (this->wall_direction == EAST)
@@ -38,10 +38,12 @@ void	draw_wall_line(t_engine *this, t_player *player, t_img *img)
 	char			*text_pixel;
 	unsigned int	color;
 
+	this->text_y = 0;
 	tmp.x = this->pixel;
-	tmp.y = ((HEIGHT / 2.0 * player->pov_rotation_y_axis) - this->line_height / 2.0)
-		* player->pov_rotation_y_axis;
-	while (tmp.y < this->line_height * player->pov_rotation_y_axis)
+	tmp.y = ((HEIGHT / 2.0 * player->pov_rotation_y_axis)
+			- this->line_height / 2.0) * player->pov_rotation_y_axis;
+	while (tmp.y < ((HEIGHT / 2.0 * player->pov_rotation_y_axis)
+			+ this->line_height / 2.0) * player->pov_rotation_y_axis)
 	{
 		text_pixel = this->selected_texture.addr
 			+ ((int)this->text_y * this->selected_texture.line_length
@@ -59,26 +61,27 @@ void	draw_wall_line(t_engine *this, t_player *player, t_img *img)
 void	calculate_distances_to_wall(t_player *player, t_engine *this)
 {
 	if (this->wall_direction == WEST || this->wall_direction == EAST)
-		this->player_to_wall_distance = fabs(player->position.x
-				- this->wall_square.x
+		this->player_to_wall_distance = fabs(this->wall_square.x
+				- player->position.x
 				+ (double)(this->step_x == -1.0))
 			/ this->ray_dir.x
 			* v_magnitude(this->ray_dir);
 	else
-		this->player_to_wall_distance = fabs(player->position.y
-				- this->wall_square.y
+		this->player_to_wall_distance = fabs(this->wall_square.y
+				- player->position.y
 				+ (double)(this->step_y == -1.0))
 			/ this->ray_dir.y
 			* v_magnitude(this->ray_dir);
-	this->perpendicular_distance = this->player_to_wall_distance 
+	this->perpendicular_distance = fabs(this->player_to_wall_distance)
 		/ v_magnitude(this->ray_dir);
-	this->line_height = fabs(HEIGHT / this->perpendicular_distance);
+	this->line_height = HEIGHT / this->perpendicular_distance;
 	if (this->wall_direction == WEST || this->wall_direction == EAST)
-		this->wall_hit_x = player->position.y + this->perpendicular_distance
-			/ this->ray_dir.y;
+		this->wall_hit_x = (player->position.y + this->perpendicular_distance
+				* this->ray_dir.y) - this->wall_square.y;
 	else
-		this->wall_hit_x = player->position.x + this->perpendicular_distance
-			/ this->ray_dir.x;
+		this->wall_hit_x = (player->position.x + this->perpendicular_distance
+				* this->ray_dir.x) - this->wall_square.x;
+	this->wall_hit_x -= floor(this->wall_hit_x);
 }
 
 void	dda_find_wall(t_engine *this, int **map)
@@ -101,9 +104,9 @@ void	dda_find_wall(t_engine *this, int **map)
 			this->dda_distance_y += this->delta_y;
 			this->wall_square.y += this->step_y;
 			if (this->ray_dir.y > 0)
-				this->wall_direction = EAST;
+				this->wall_direction = SOUTH;
 			else
-				this->wall_direction = WEST;
+				this->wall_direction = NORTH;
 		}
 		if (map[(int)this->wall_square.y][(int)this->wall_square.x] != 0)
 			this->wall_hit = true;
