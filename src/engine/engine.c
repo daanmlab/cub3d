@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:43:12 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/24 01:41:34 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/24 02:18:23 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	engine(t_game *game)
 		calculate_distances_to_wall(&game->player, &this);
 		setup_texture(&this, game->textures);
 		draw_wall_line(&this, &game->player, &game->frame);
+		printf("pixel: %d\n", this.pixel);
 		this.pixel++;
 	}
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->frame.img, 0, 0);
