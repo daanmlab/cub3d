@@ -6,21 +6,26 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:31:28 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/25 00:06:53 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/25 22:13:12 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	setup_texture(t_engine *this, t_textures textures)
+void	setup_texture(t_engine *this, t_textures textures, t_player *player)
 {
 	this->text_y = 0;
 	this->text_y_step = TEXTURE_SIZE / this->line_height;
 	this->text_x = this->wall_hit_x * TEXTURE_SIZE;
 	if (((this->wall_direction == EAST || this->wall_direction == WEST)
-			&& this->ray_dir.x > 0)
+			&& this->ray_dir.x > 0 && (player-> initial_dir == 'E' || player->initial_dir == 'W'))
 		|| ((this->wall_direction == SOUTH || this->wall_direction == NORTH)
-			&& this->ray_dir.y < 0))
+			&& this->ray_dir.y < 0 && (player->initial_dir == 'E'  || player->initial_dir == 'W')))
+		this->text_x = TEXTURE_SIZE - this->text_x - 1;
+	else if (((this->wall_direction == EAST || this->wall_direction == WEST)
+			&& this->ray_dir.x < 0 && (player-> initial_dir == 'N' || player->initial_dir == 'S'))
+		|| ((this->wall_direction == SOUTH || this->wall_direction == NORTH)
+			&& this->ray_dir.y > 0 && (player->initial_dir == 'N'  || player->initial_dir == 'S')))
 		this->text_x = TEXTURE_SIZE - this->text_x - 1;
 	if (this->wall_direction == EAST)
 		this->selected_texture = textures.east;
@@ -40,9 +45,9 @@ void	draw_wall_line(t_engine *this, t_player *player, t_img *img)
 
 	this->text_y = 0;
 	tmp.x = this->pixel;
-	tmp.y = ((HEIGHT / 2.0 + player->pov_rotation_y_axis)
+	tmp.y = ((HEIGHT / 2.0 * (1 + player->pov_rotation_y_axis))
 			- this->line_height / 2.0);
-	while (tmp.y < ((HEIGHT / 2.0 + player->pov_rotation_y_axis)
+	while (tmp.y < ((HEIGHT / 2.0 * (1 + player->pov_rotation_y_axis))
 			+ this->line_height / 2.0))
 	{
 		text_pixel = this->selected_texture.addr

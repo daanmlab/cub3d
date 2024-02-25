@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:46:23 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/24 00:47:06 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/25 21:15:06 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	parse(int argc, char const *argv[], t_game *game)
 {
 	int	fd;
 
+	ft_printf("\033[0m");
 	if (!check_args(argc, argv))
 		return (-1);
 	game->file = argv[1];

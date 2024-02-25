@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/25 16:26:25 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/25 22:20:11 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,15 @@ typedef struct s_player
 	bool		is_walking_back;
 	bool		is_walking_left;
 	bool		is_walking_right;
-	bool		is_running;
+	int			is_running;
 	bool		is_looking_right;
 	bool		is_looking_left;
-	int		pov_rotation_x_axis;
-	int		pov_rotation_y_axis;
+	double		mouse_sensibility;
+	int			last_mouse_x;
+	int			delta_mouse_x;
+	int			last_mouse_y;
+	int			delta_mouse_y;
+	double		pov_rotation_y_axis;
 }	t_player;
 
 
@@ -201,7 +205,7 @@ void	draw_floor_and_ceiling(t_game *game, t_map map, t_player player,
 			 t_img *img);
 
 void	draw_wall_line(t_engine *this, t_player *player, t_img *img);
-void	setup_texture(t_engine *this, t_textures textures);
+void	setup_texture(t_engine *this, t_textures textures, t_player *player);
 void	calculate_distances_to_wall(t_player *player, t_engine *this);
 void	dda_find_wall(t_engine *this, int **map);
 void	set_distances_to_sides(t_player *player, t_engine *this);
@@ -218,5 +222,16 @@ int catch_key_release(int key, t_player *player);
 
 void	event_listener(t_game *game);
 int	clean_exit(t_game	*game);
+
+void	running_animation(t_player *player);
+
+bool	no_colision(t_player *player, char side, int **map);
+t_vector	walk(t_player *player, char side, int **map);
+void	apply_changes_on_player(t_game *game, t_player *player, int **map);
+void	setup_ray(t_engine *this, t_player player);
+void	dir_and_plane_rotate(t_vector *dir, t_vector *plane, double angle);
+
+int	get_mouse_x(t_game *game);
+int	get_mouse_y(t_game *game);
 
 #endif

@@ -41,6 +41,9 @@ SRC = $(addprefix $(SRC_PATH), \
 		engine/engine.c \
 		engine/engine_utils.c \
 		drawing_utils.c \
+		engine/engine_utils2.c \
+		engine/animations.c \
+		utils.c \
 		events/events.c) 
 
 $(OBJ): $(OBJ_PATH)

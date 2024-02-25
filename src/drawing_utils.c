@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:10:27 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/24 11:27:06 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/25 22:16:40 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void	draw_floor_and_ceiling(t_game *game, t_map map, t_player player,
 	map.ceiling.height = HEIGHT;
 	map.ceiling.width = WIDTH;
 	map.ceiling.color = game->ceiling_color.color;
-	map.floor.start = new_vector(0, HEIGHT / 2 + player.pov_rotation_y_axis);
-	map.floor.height = HEIGHT;
+	map.floor.start = new_vector(0, HEIGHT / 2 * (1  + player.pov_rotation_y_axis));
+	map.floor.height = HEIGHT * 5;
 	map.floor.width = WIDTH;
 	map.floor.color = game->floor_color.color;
 	rectangle(img, map.ceiling);

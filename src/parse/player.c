@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:23:20 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/25 16:21:25 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/25 22:10:27 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,16 @@ t_player	player_constructor(void)
 {
 	t_player	new;
 
-	new.pov_rotation_x_axis = 0;
-	new.pov_rotation_y_axis = 0;
+	new.mouse_sensibility = 0.006;
+	new.last_mouse_x = WIDTH / 2;
+	new.last_mouse_y = HEIGHT / 2;
+	new.pov_rotation_y_axis = 0.0;
 	new.is_walking = false;
 	new.is_walking_back = false;
 	new.is_walking_left = false;
-	new.is_running = false;
+	new.is_walking_right = false;
+	new.is_running = 0;
 	new.is_looking_left = false;
+	new.is_looking_right = false;
 	return (new);
 }
