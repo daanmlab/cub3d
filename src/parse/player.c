@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:23:20 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/24 14:34:40 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:21:25 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static int	set_player(t_game *game, t_vector pos)
 		return (0);
 	game->player.position.y = pos.y;
 	game->player.position.x = pos.x;
-	game->player.direction = filter_initial_direction(temp);
+	game->player.initial_dir = *temp;
+	game->player.dir = filter_initial_direction(temp);
 	game->player.plane = filter_initial_plane(temp);
 	game->player.map_square = new_vector(floor(pos.x), floor(pos.y));
 	return (1);
@@ -85,6 +86,7 @@ t_player	player_constructor(void)
 	new.pov_rotation_y_axis = 0;
 	new.is_walking = false;
 	new.is_walking_back = false;
+	new.is_walking_left = false;
 	new.is_running = false;
 	new.is_looking_left = false;
 	return (new);

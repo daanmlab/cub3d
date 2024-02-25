@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/24 17:01:11 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:26:25 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define WIDTH 1080
 # define HEIGHT 720
 # define TEXTURE_SIZE 64
-
+# define PI 3.14159265
 
 typedef struct s_vector
 {
@@ -46,10 +46,13 @@ typedef struct s_player
 {
 	t_vector	position;
 	t_vector	map_square;
-	t_vector	direction;
+	t_vector	dir;
+	char		initial_dir;
 	t_vector	plane;
 	bool		is_walking;
 	bool		is_walking_back;
+	bool		is_walking_left;
+	bool		is_walking_right;
 	bool		is_running;
 	bool		is_looking_right;
 	bool		is_looking_left;
@@ -212,5 +215,8 @@ t_player player_constructor(void);
 
 int catch_key_press(int key, t_player *player);
 int catch_key_release(int key, t_player *player);
+
+void	event_listener(t_game *game);
+int	clean_exit(t_game	*game);
 
 #endif
