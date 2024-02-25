@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/24 14:36:33 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:01:11 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,9 @@ typedef enum e_direction
     NORTH,
     SOUTH,
     EAST,
-    WEST
+    WEST,
+	HORIZONTAL,
+	VERTICAL
 }	t_direction;
 
 typedef struct s_color
