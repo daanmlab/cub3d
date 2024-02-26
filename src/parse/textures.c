@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:29:53 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/26 12:16:25 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:23:31 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,18 @@ int	create_img(t_game *game, t_img *img, char *img_file)
 {
 	if (open(img_file, O_RDONLY) == -1)
 	{
-		return (ft_printf("file %s doesn't exist\n", img_file) && 0);
+		ft_putstr_fd("file ", 2);
+		ft_putstr_fd(img_file, 2);
+		ft_putstr_fd(" doesn't exist\n", 2);
+		return (0);
 	}
 	img->x = 0;
 	img->y = 0;
 	img->img = mlx_xpm_file_to_image(game->mlx, img_file, &img->x, &img->y);
 	if (!img->img)
 	{
-		ft_printf("invalid file %s", img_file);
+		ft_putstr_fd("invalid file ", 2);
+		ft_putstr_fd(img_file, 2);
 		return (0);
 	}
 	img->addr = mlx_get_data_addr(img->img, &(img->bits_per_pixel),
@@ -62,28 +66,7 @@ int	create_img(t_game *game, t_img *img, char *img_file)
 	return (1);
 }
 
-void	*free_textures(t_game *game)
-{
-	if (game->map.north_texture)
-		free(game->map.north_texture);
-	if (game->map.south_texture)
-		free(game->map.south_texture);
-	if (game->map.west_texture)
-		free(game->map.west_texture);
-	if (game->map.east_texture)
-		free(game->map.east_texture);
-	if (game->textures.north.img)
-		mlx_destroy_image(game->mlx, game->textures.north.img);
-	if (game->textures.south.img)
-		mlx_destroy_image(game->mlx, game->textures.south.img);
-	if (game->textures.west.img)
-		mlx_destroy_image(game->mlx, game->textures.west.img);
-	if (game->textures.east.img)
-		mlx_destroy_image(game->mlx, game->textures.east.img);
-	return (NULL);
-}
-
-int check_enough_textures(t_game *game)
+int	check_enough_textures(t_game *game)
 {
 	int		i;
 	char	*textures[4];
@@ -95,14 +78,14 @@ int check_enough_textures(t_game *game)
 	i = 0;
 	while (i < 4 && textures[i])
 		i++;
-	return i == 4;
+	return (i == 4);
 }
 
 int	create_textures(t_game *game)
 {
 	t_img	*images[4];
 	char	*textures[4];
-	int i;
+	int		i;
 
 	textures[0] = game->map.north_texture;
 	textures[1] = game->map.south_texture;
@@ -113,16 +96,16 @@ int	create_textures(t_game *game)
 	images[2] = &game->textures.west;
 	images[3] = &game->textures.east;
 	if (!check_enough_textures(game))
-		return write(2, "not enough textures\n", 20) && !!free_textures(game);
+		return (write(2, "not enough textures\n", 20) && !!free_textures(game));
 	i = 0;
 	while (i < 4 && create_img(game, images[i], textures[i]))
 		i++;
 	if (i != 4)
 		return (!!free_textures(game));
-	 free(game->map.east_texture);
-	 free(game->map.west_texture);
-	 free(game->map.south_texture);
-	 free(game->map.north_texture);
+	free(game->map.east_texture);
+	free(game->map.west_texture);
+	free(game->map.south_texture);
+	free(game->map.north_texture);
 	return (1);
 }
 
@@ -146,5 +129,5 @@ int	get_textures(int fd, t_game *game)
 		line = get_next_line(fd);
 	}
 	free(line);
-	return create_textures(game);
+	return (create_textures(game));
 }

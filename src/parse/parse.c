@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parce.c                                            :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 14:46:23 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/25 21:15:06 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:22:17 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,20 @@ int	check_file_name(const char *filename)
 int	check_args(int argc, char const *argv[])
 {
 	if (argc < 2)
-		return (ft_printf("not enough arguments\n") && 0);
+	{
+		ft_putstr_fd("not enough arguments\n", 2);
+		return (0);
+	}
 	if (argc > 2)
-		return (ft_printf("too many arguments\n") && 0);
+	{
+		ft_putstr_fd("too many arguments\n", 2);
+		return (0);
+	}
 	if (!check_file_name(argv[1]))
-		return (ft_printf("invalid file name\n") && 0);
+	{
+		ft_putstr_fd("invalid file name\n", 2);
+		return (0);
+	}
 	return (1);
 }
 
@@ -54,12 +63,12 @@ int	parse(int argc, char const *argv[], t_game *game)
 	if (!get_textures(fd, game))
 		return (-1);
 	if (!get_colors(fd, game))
-		return !!free_textures(game);
+		return (-1);
 	if (!get_matrix(fd, game))
-		return !!free_textures(game);
+		return (-1);
 	if (!find_player(game))
-		return  free_matrix(game->map.matrix), !!free_textures(game);
+		return (-1);
 	if (!do_floodfill(game))
-		return free_matrix(game->map.matrix), !!free_textures(game);
-	return (1);
+		return (-1);
+	return (0);
 }

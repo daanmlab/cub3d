@@ -6,32 +6,32 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 16:06:46 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/26 12:31:56 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:57:32 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <unistd.h>
 
-void	clear_screen(void)
+static void	print_character(t_map *map, int **been, t_vector v)
 {
-	char	*clear_screen_ansi;
-
-	clear_screen_ansi = "\e[1;1H\e[2J";
-	ft_putstr_fd(clear_screen_ansi, 1);
-}
-
-void	free_been_matrix(int **been, t_map *map)
-{
-	int	i;
-
-	i = 0;
-	while (i < map->size.y)
+	if (been[(int)v.y][(int)v.x])
 	{
-		free(been[i]);
-		i++;
+		if (map->matrix[(int)v.y][(int)v.x] == ' '
+			|| map->matrix[(int)v.y][(int)v.x] == '\0')
+			ft_printf("\033[1;31m*\033[0m");
+		else
+		{
+			if (v.y == 0 || !map->matrix[(int)v.y + 1] || v.x == 0
+				|| !map->matrix[(int)v.y][(int)v.x + 1])
+				ft_printf("\033[1;31m%c\033[0m",
+					map->matrix[(int)v.y][(int)v.x]);
+			else
+				ft_printf("\033[1;36m%c\033[0m",
+					map->matrix[(int)v.y][(int)v.x]);
+		}
 	}
-	free(been);
+	else
+		ft_printf("%c", map->matrix[(int)v.y][(int)v.x]);
 }
 
 static void	print_matrix(t_map *map, int **been)
@@ -44,22 +44,7 @@ static void	print_matrix(t_map *map, int **been)
 		v.x = 0;
 		while (v.x < map->size.x)
 		{
-			if (been[(int)v.y][(int)v.x])
-			{
-				if (map->matrix[(int)v.y][(int)v.x] == ' '
-					|| map->matrix[(int)v.y][(int)v.x] == '\0')
-					ft_printf("\033[1;31m*\033[0m");
-				else
-				{
-					if (v.y == 0 || !map->matrix[(int)v.y + 1] || v.x == 0
-						|| !map->matrix[(int)v.y][(int)v.x + 1])
-						ft_printf("\033[1;31m%c\033[0m", map->matrix[(int)v.y][(int)v.x]);
-					else
-						ft_printf("\033[1;36m%c\033[0m", map->matrix[(int)v.y][(int)v.x]);
-				}
-			}
-			else
-				ft_printf("%c", map->matrix[(int)v.y][(int)v.x]);
+			print_character(map, been, v);
 			v.x++;
 		}
 		ft_printf("\n");
@@ -75,7 +60,7 @@ int	**create_been_matrix(t_map *map)
 	been = ft_calloc(map->size.y, sizeof(int *));
 	if (!been)
 	{
-		ft_printf("Error: malloc failed in floodfill.\n");
+		ft_putstr_fd("Error: malloc failed in floodfill.\n", 2);
 		return (NULL);
 	}
 	i = 0;
@@ -96,12 +81,12 @@ int	floodfill(t_map *map, int **been, int x, int y)
 	if (map->matrix[y][x] == '1' || been[y][x] == 1)
 		return (1);
 	been[y][x] = 1;
-	clear_screen();
+	ft_putstr_fd("\e[1;1H\e[2J", 1);
 	print_matrix(map, been);
 	usleep(60000);
 	if (x <= 0 || y <= 0 || x >= map->size.x - 1 || y >= map->size.y - 1)
 	{
-		ft_printf("Floodfill failed\n");
+		ft_putstr_fd("Floodfill failed\n", 2);
 		free_been_matrix(been, map);
 		return (0);
 	}

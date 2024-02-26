@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 21:52:14 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/18 15:36:13 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 21:30:02 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,3 @@ t_vector	v_rotate(t_vector v, double angle)
 	new.y = v.x * sin(angle) + v.y * cos(angle);
 	return (new);
 }
-

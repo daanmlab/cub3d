@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:41:50 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/26 12:24:38 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 20:19:38 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,19 @@ int	extract_color(const char *temp, t_color *color)
 	str = ft_strtrim(temp, "\n ");
 	i = 0;
 	if (!is_color(str))
-		return (free(str), ft_printf("invalid color: %s\n", str));
+		return (free(str), ft_putstr_fd("invalid color.\n", 2), 0);
 	split = ft_split(str, ',');
 	while (split[i])
 		i++;
 	if (i != 3)
-		return ((ft_printf("invalid color: %s;\n", str), free(str), 0)
+		return ((ft_putstr_fd("invalid color.\n", 2), free(str), 0)
 			&& ft_free_tab(split));
 	color->r = ft_atoi(split[0]);
 	color->g = ft_atoi(split[1]);
 	color->b = ft_atoi(split[2]);
 	ft_free_tab(split);
 	if (color->r > 255 || color->g > 255 || color->b > 255)
-		return ((ft_printf("invalid color: %s;\n", str), free(str), 0));
+		return (ft_putstr_fd("invalid color.\n", 2), free(str), 0);
 	color->color = color->r;
 	color->color = (color->color << 8) + color->g;
 	color->color = (color->color << 8) + color->b;

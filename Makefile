@@ -30,7 +30,7 @@ OBJ_PATH = obj/
 
 SRC = $(addprefix $(SRC_PATH), \
 		main.c \
-		parse/parce.c \
+		parse/parse.c \
 		parse/textures.c \
 		parse/colors.c \
 		parse/matrix.c \
@@ -44,6 +44,8 @@ SRC = $(addprefix $(SRC_PATH), \
 		engine/engine_utils2.c \
 		engine/animations.c \
 		utils.c \
+		exit_utils.c \
+		parse/parsing_utils.c \
 		events/events.c) 
 
 $(OBJ): $(OBJ_PATH)

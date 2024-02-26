@@ -3,7 +3,7 @@ SO ./textures/Wall.xpm
 WE ./textures/Wall.xpm
 EA ./textures/Wall.xpm
 
-C 150,150,255
+C 150,150,250
 F 50,50,50
 
 1111111111111111
