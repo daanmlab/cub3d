@@ -1,10 +1,10 @@
-NO ./test_textures/north.xpm
-SO ./test_textures/south.xpm
-WE ./test_textures/west.xpm
-EA ./test_textures/east.xpm
+NO ./textures/Wall.xpm
+SO ./textures/Wall.xpm
+WE ./textures/Wall.xpm
+EA ./textures/Wall.xpm
 
-C 225,30,0
-F 220,100,0
+C 150,150,255
+F 50,50,50
 
 1111111111111111
 1000000000000001

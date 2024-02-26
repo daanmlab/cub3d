@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:43:12 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/25 21:01:46 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 01:10:34 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	render_next_frame(t_game *game)
 {
 	t_engine	this;
 
+	if (game->player.exit)
+		clean_exit(game);
 	apply_changes_on_player(game, &game->player, game->map.real_map);
 	draw_floor_and_ceiling(game, game->map, game->player, &game->frame);
 	running_animation(&game->player);
@@ -30,8 +32,8 @@ int	render_next_frame(t_game *game)
 		draw_wall_line(&this, &game->player, &game->frame);
 		this.pixel++;
 	}
-	game->player.is_looking_left = false;
-	game->player.is_looking_right = false;
+	setup_animation_curve(&game->player);
+	draw_hud_object(new_vector(0, 0), game, "textures/RayGun.xpm");
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->frame.img, 0, 0);
 	return (0);
 }

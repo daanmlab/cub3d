@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:23:20 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/25 22:10:27 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 00:30:46 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ t_player	player_constructor(void)
 	new.is_walking_left = false;
 	new.is_walking_right = false;
 	new.is_running = 0;
-	new.is_looking_left = false;
-	new.is_looking_right = false;
+	new.exit = false;
+	new.animation_curve = 0.0;
+	new.primary_weapon = "textures/RayGun.xpm";
+	new.primary_weapon_origin = new_vector(WIDTH - WIDTH / 3, HEIGHT);
+	new.secondary_weapon_origin = new_vector(WIDTH - WIDTH / 3, HEIGHT);
 	return (new);
 }

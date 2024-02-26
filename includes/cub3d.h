@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/25 22:20:11 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 01:07:21 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # define WIDTH 1080
 # define HEIGHT 720
-# define TEXTURE_SIZE 64
+# define TEXTURE_SIZE 254
 # define PI 3.14159265
 
 typedef struct s_vector
@@ -33,6 +33,19 @@ typedef struct s_vector
 	double	y;
 }	t_vector;
 
+typedef enum e_weapon
+{
+	PRIMARY,
+	SECONDARY
+}	t_weapon;
+
+typedef struct s_pixel
+{
+	char			*adr;
+	int 			x;
+	int 			y;
+	unsigned int	color;
+}	t_pixel;
 
 typedef struct s_rectangle
 {
@@ -44,24 +57,29 @@ typedef struct s_rectangle
 
 typedef struct s_player
 {
+	t_weapon	weapon;
+	const char	*primary_weapon;
+	const char	*secondary_weapon;
+	t_vector	primary_weapon_origin;
+	t_vector	secondary_weapon_origin;
 	t_vector	position;
 	t_vector	map_square;
 	t_vector	dir;
-	char		initial_dir;
 	t_vector	plane;
+	char		initial_dir;
+	bool		exit;
 	bool		is_walking;
 	bool		is_walking_back;
 	bool		is_walking_left;
 	bool		is_walking_right;
 	int			is_running;
-	bool		is_looking_right;
-	bool		is_looking_left;
 	double		mouse_sensibility;
 	int			last_mouse_x;
 	int			delta_mouse_x;
 	int			last_mouse_y;
 	int			delta_mouse_y;
 	double		pov_rotation_y_axis;
+	double		animation_curve;
 }	t_player;
 
 
@@ -93,6 +111,8 @@ typedef struct s_img
 	int				line_length;
     int             x;
     int             y;
+	int             width;
+	int             height;
 }	t_img;
 
 typedef struct s_map
@@ -233,5 +253,9 @@ void	dir_and_plane_rotate(t_vector *dir, t_vector *plane, double angle);
 
 int	get_mouse_x(t_game *game);
 int	get_mouse_y(t_game *game);
+
+void	draw_hud_object(t_vector origin, t_game *game, char *filename);
+
+void	setup_animation_curve(t_player *player);
 
 #endif

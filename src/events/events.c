@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 22:05:38 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/25 20:45:16 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/25 23:33:45 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	event_listener(t_game *game)
 {
 	mlx_hook(game->mlx_win, 2, 1L << 0, catch_key_press, &game->player);
-	mlx_hook(game->mlx_win, 3, 1L << 1, catch_key_release, &game->player);
 	mlx_hook(game->mlx_win, 3, 1L << 1, catch_key_release, &game->player);
 	mlx_hook(game->mlx_win, 17, 1L << 0, clean_exit, game);
 }
@@ -28,7 +27,7 @@ int	clean_exit(t_game	*game)
 	mlx_destroy_window(game->mlx, game->mlx_win);
 	mlx_destroy_display(game->mlx);
 	free(game->mlx);
-	exit(1);
+	exit(0);
 }
 
 
@@ -47,10 +46,8 @@ int catch_key_press(int key, t_player *player)
 		player->is_walking_right = true;
 	else if (key == XK_Shift_L) 
 		player->is_running++;
-	if (key == XK_Left)
-		player->is_looking_left = true;
-	else if (key == XK_Right)
-		player->is_looking_right = true;
+	else if (key == XK_Escape)
+		player->exit = true;
 	return (0);
 }
 
@@ -69,9 +66,5 @@ int catch_key_release(int key, t_player *player)
 		player->is_walking_right = false;
 	if (key == XK_Shift_L)
 		player->is_running--;
-	if (key == XK_Left)
-		player->is_looking_left = false;
-	else if (key == XK_Right)
-		player->is_looking_right = false;
 	return (0);
 }
