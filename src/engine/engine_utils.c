@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 01:31:28 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/25 22:13:12 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:14:00 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,18 @@ void	setup_texture(t_engine *this, t_textures textures, t_player *player)
 	this->text_y_step = TEXTURE_SIZE / this->line_height;
 	this->text_x = this->wall_hit_x * TEXTURE_SIZE;
 	if (((this->wall_direction == EAST || this->wall_direction == WEST)
-			&& this->ray_dir.x > 0 && (player-> initial_dir == 'E' || player->initial_dir == 'W'))
+			&& this->ray_dir.x > 0
+			&& (player-> initial_dir == 'E' || player->initial_dir == 'W'))
 		|| ((this->wall_direction == SOUTH || this->wall_direction == NORTH)
-			&& this->ray_dir.y < 0 && (player->initial_dir == 'E'  || player->initial_dir == 'W')))
+			&& this->ray_dir.y < 0
+			&& (player->initial_dir == 'E' || player->initial_dir == 'W')))
 		this->text_x = TEXTURE_SIZE - this->text_x - 1;
 	else if (((this->wall_direction == EAST || this->wall_direction == WEST)
-			&& this->ray_dir.x < 0 && (player-> initial_dir == 'N' || player->initial_dir == 'S'))
+			&& this->ray_dir.x < 0
+			&& (player-> initial_dir == 'N' || player->initial_dir == 'S'))
 		|| ((this->wall_direction == SOUTH || this->wall_direction == NORTH)
-			&& this->ray_dir.y > 0 && (player->initial_dir == 'N'  || player->initial_dir == 'S')))
+			&& this->ray_dir.y > 0
+			&& (player->initial_dir == 'N' || player->initial_dir == 'S')))
 		this->text_x = TEXTURE_SIZE - this->text_x - 1;
 	if (this->wall_direction == EAST)
 		this->selected_texture = textures.east;

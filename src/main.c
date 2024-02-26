@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:10:27 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/25 22:24:47 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 10:04:20 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char const *argv[])
 	if (!parse(argc, argv, &game))
 		return (1);
 	game.mlx_win = mlx_new_window(game.mlx, WIDTH, HEIGHT, "cub3d");
-	mlx_mouse_hide(game.mlx, game.mlx_win);
+	//mlx_mouse_hide(game.mlx, game.mlx_win);
 	mlx_mouse_move(game.mlx, game.mlx_win, WIDTH / 2, HEIGHT / 2);
 	mlx_do_key_autorepeatoff(game.mlx);
 	game.frame.img = mlx_new_image(game.mlx, WIDTH, HEIGHT);

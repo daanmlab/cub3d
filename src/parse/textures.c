@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:29:53 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/23 20:28:41 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:16:25 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,10 @@ int	create_textures(t_game *game)
 		i++;
 	if (i != 4)
 		return (!!free_textures(game));
+	 free(game->map.east_texture);
+	 free(game->map.west_texture);
+	 free(game->map.south_texture);
+	 free(game->map.north_texture);
 	return (1);
 }
 

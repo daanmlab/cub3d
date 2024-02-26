@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/26 01:07:21 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:33:30 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,21 @@
 
 # define WIDTH 1080
 # define HEIGHT 720
-# define TEXTURE_SIZE 254
+# define TEXTURE_SIZE 64
 # define PI 3.14159265
+
+typedef struct s_img
+{
+	void			*img;
+	char			*addr;
+	int				bits_per_pixel;
+	int				endian;
+	int				line_length;
+    int             x;
+    int             y;
+	int             width;
+	int             height;
+}	t_img;
 
 typedef struct s_vector
 {
@@ -33,11 +46,11 @@ typedef struct s_vector
 	double	y;
 }	t_vector;
 
-typedef enum e_weapon
+typedef enum e_hud
 {
 	PRIMARY,
 	SECONDARY
-}	t_weapon;
+}	t_hud;
 
 typedef struct s_pixel
 {
@@ -45,6 +58,8 @@ typedef struct s_pixel
 	int 			x;
 	int 			y;
 	unsigned int	color;
+	int				text_x;
+	int				text_y;
 }	t_pixel;
 
 typedef struct s_rectangle
@@ -57,9 +72,9 @@ typedef struct s_rectangle
 
 typedef struct s_player
 {
-	t_weapon	weapon;
-	const char	*primary_weapon;
-	const char	*secondary_weapon;
+	t_hud		weapon_type;
+	t_img		primary_weapon;
+	t_img		secondary_weapon;
 	t_vector	primary_weapon_origin;
 	t_vector	secondary_weapon_origin;
 	t_vector	position;
@@ -102,18 +117,7 @@ typedef struct s_color
     int error;
 }	t_color;
 
-typedef struct s_img
-{
-	void			*img;
-	char			*addr;
-	int				bits_per_pixel;
-	int				endian;
-	int				line_length;
-    int             x;
-    int             y;
-	int             width;
-	int             height;
-}	t_img;
+
 
 typedef struct s_map
 {
@@ -235,7 +239,7 @@ int		render_next_frame(t_game *game);
 
 //* Constructors
 
-t_player player_constructor(void);
+t_player player_constructor(t_game *game);
 
 int catch_key_press(int key, t_player *player);
 int catch_key_release(int key, t_player *player);
@@ -254,8 +258,11 @@ void	dir_and_plane_rotate(t_vector *dir, t_vector *plane, double angle);
 int	get_mouse_x(t_game *game);
 int	get_mouse_y(t_game *game);
 
-void	draw_hud_object(t_vector origin, t_game *game, char *filename);
+void	draw_hud_object(t_game *game, t_player *player);
 
 void	setup_animation_curve(t_player *player);
+void	changing_weapon_animation(t_player *player);
+void	ft_free_int_matrix(int **matrix, int size);
+t_img	img_constructor(t_game *game, char *filename);
 
 #endif

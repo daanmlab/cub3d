@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:23:20 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/26 00:30:46 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:56:36 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	find_player(t_game *game)
 	t_vector	curr;
 	int			players_found;
 
-	game->player = player_constructor();
+	game->player = player_constructor(game);
 	players_found = 0;
 	curr.y = 0;
 	while (game->map.matrix[(int)curr.y])
@@ -78,7 +78,7 @@ int	find_player(t_game *game)
 	return (1);
 }
 
-t_player	player_constructor(void)
+t_player	player_constructor(t_game *game)
 {
 	t_player	new;
 
@@ -93,8 +93,10 @@ t_player	player_constructor(void)
 	new.is_running = 0;
 	new.exit = false;
 	new.animation_curve = 0.0;
-	new.primary_weapon = "textures/RayGun.xpm";
-	new.primary_weapon_origin = new_vector(WIDTH - WIDTH / 3, HEIGHT);
-	new.secondary_weapon_origin = new_vector(WIDTH - WIDTH / 3, HEIGHT);
+	new.primary_weapon = img_constructor(game, "textures/RayGun.xpm");
+	new.secondary_weapon = img_constructor(game, "textures/DSLR.xpm");
+	new.weapon_type = PRIMARY;
+	new.primary_weapon_origin = new_vector(WIDTH - WIDTH / 2.3, HEIGHT);
+	new.secondary_weapon_origin = new_vector(WIDTH - WIDTH / 2.3, HEIGHT);
 	return (new);
 }

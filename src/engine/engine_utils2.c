@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 18:08:09 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/26 01:09:10 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:20:23 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 bool	no_colision(t_player *player, char side, int **map)
 {
-	t_vector tmp;
+	t_vector	tmp;
 
 	if (side == 'f')
 		tmp = v_sum(player->position, v_mult(player->dir, 0.2));
 	else if (side == 'b')
 		tmp = v_sum(player->position, v_mult(player->dir, -0.2));
 	else if (side == '1')
-		tmp = v_sum (player->position, v_mult(v_rotate(player->dir, PI / 2), -0.2));
+		tmp = v_sum (player->position, v_mult(v_rotate(player->dir, PI / 2),
+					-0.2));
 	else
-		tmp = v_sum (player->position, v_mult(v_rotate(player->dir, PI / 2), 0.2));
+		tmp = v_sum (player->position, v_mult(v_rotate(player->dir, PI / 2),
+					0.2));
 	return (map[(int)floorf(tmp.y)][(int)floorf(tmp.x)] == 0);
 }
 
@@ -33,18 +35,24 @@ t_vector	walk(t_player *player, char side, int **map)
 		return (v_sum(player->position, v_mult(player->dir, 0.01)));
 	else if (side == 'b' && no_colision(player, side, map))
 		return (v_sum(player->position, v_mult(player->dir, -0.01)));
-	else if ((((player->initial_dir == 'N' || player->initial_dir == 'S') && side == 'l')
-		|| ((player->initial_dir == 'E' || player->initial_dir == 'W') && side == 'r'))
+	else if ((((player->initial_dir == 'N' || player->initial_dir == 'S')
+				&& side == 'l')
+			|| ((player->initial_dir == 'E' || player->initial_dir == 'W')
+				&& side == 'r'))
 		&& no_colision(player, '1', map))
-		return (v_sum (player->position, v_mult(v_rotate(player->dir, PI / 2), -0.01)));
-	else if ((((player->initial_dir == 'N' || player->initial_dir == 'S') && side == 'r')
-		|| ((player->initial_dir == 'E' || player->initial_dir == 'W') && side == 'l'))
+		return (v_sum (player->position, v_mult(v_rotate(player->dir, PI / 2),
+					-0.01)));
+	else if ((((player->initial_dir == 'N' || player->initial_dir == 'S')
+				&& side == 'r')
+			|| ((player->initial_dir == 'E' || player->initial_dir == 'W')
+				&& side == 'l'))
 		&& no_colision(player, '2', map))
-		return (v_sum (player->position, v_mult(v_rotate(player->dir, PI / 2), 0.01)));
+		return (v_sum (player->position, v_mult(v_rotate(player->dir, PI / 2),
+					0.01)));
 	else if (side == 's' && no_colision(player, 'f', map))
 		return (v_sum(player->position, v_mult(player->dir, 0.02)));
 	else
-		return(player->position);
+		return (player->position);
 }
 
 void	apply_changes_on_player(t_game *game, t_player *player, int **map)
@@ -62,12 +70,15 @@ void	apply_changes_on_player(t_game *game, t_player *player, int **map)
 	player->delta_mouse_x = get_mouse_x(game) - player->last_mouse_x;
 	player->last_mouse_x = get_mouse_x(game);
 	if (player->initial_dir == 'N' || player->initial_dir == 'S')
-		dir_and_plane_rotate(&player->dir, &player->plane, player->delta_mouse_x * player->mouse_sensibility);
+		dir_and_plane_rotate(&player->dir, &player->plane,
+			player->delta_mouse_x * player->mouse_sensibility);
 	else
-		dir_and_plane_rotate(&player->dir, &player->plane, -(player->delta_mouse_x * player->mouse_sensibility));
+		dir_and_plane_rotate(&player->dir, &player->plane,
+			-(player->delta_mouse_x * player->mouse_sensibility));
 	player->delta_mouse_y = get_mouse_y(game) - player->last_mouse_y;
 	player->last_mouse_y = get_mouse_y(game);
-	player->pov_rotation_y_axis -= player->delta_mouse_y * player->mouse_sensibility;
+	player->pov_rotation_y_axis
+		-= player->delta_mouse_y * player->mouse_sensibility;
 	player->map_square = new_vector(floor(player->position.x),
 			floor(player->position.y));
 }

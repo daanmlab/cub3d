@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:10:27 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/25 22:16:40 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 12:22:39 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,14 @@ t_rectangle	new_rectangle(unsigned int width, unsigned int height,
 }
 
 void	draw_floor_and_ceiling(t_game *game, t_map map, t_player player,
-			 t_img *img)
+			t_img *img)
 {
 	map.ceiling.start = new_vector(0, 0);
 	map.ceiling.height = HEIGHT;
 	map.ceiling.width = WIDTH;
 	map.ceiling.color = game->ceiling_color.color;
-	map.floor.start = new_vector(0, HEIGHT / 2 * (1  + player.pov_rotation_y_axis));
+	map.floor.start = new_vector(0, HEIGHT / 2
+			* (1 + player.pov_rotation_y_axis));
 	map.floor.height = HEIGHT * 5;
 	map.floor.width = WIDTH;
 	map.floor.color = game->floor_color.color;

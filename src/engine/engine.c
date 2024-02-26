@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:43:12 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/26 01:10:34 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/26 11:20:41 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	render_next_frame(t_game *game)
 		this.pixel++;
 	}
 	setup_animation_curve(&game->player);
-	draw_hud_object(new_vector(0, 0), game, "textures/RayGun.xpm");
+	changing_weapon_animation(&game->player);
+	draw_hud_object(game, &game->player);
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->frame.img, 0, 0);
 	return (0);
 }
