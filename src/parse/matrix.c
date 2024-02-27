@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:34:10 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/26 21:33:07 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:34:21 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int	get_real_map(t_map *map)
 	map->real_map = ft_calloc(map->size.y, sizeof(int *));
 	if (!map->real_map)
 		return (ft_putstr_fd("error allocating memory\n", 2), -1);
-	i = 0;
-	while (i < map->size.y)
+	i = -1;
+	while (++i < map->size.y)
 	{
 		map->real_map[i] = ft_calloc(map->size.x, sizeof(int));
 		if (!map->real_map[i])
@@ -31,11 +31,12 @@ static int	get_real_map(t_map *map)
 		{
 			if (map->matrix[i][j] == '1')
 				map->real_map[i][j] = 1;
-			else
+			else if (map->matrix[i][j] == '0' || ft_isalpha(map->matrix[i][j]))
 				map->real_map[i][j] = 0;
+			else
+				map->real_map[i][j] = 9;
 			j++;
 		}
-		i++;
 	}
 	return (1);
 }
@@ -104,10 +105,7 @@ int	check_matrix(t_game *game)
 		{
 			if (!ft_strchr(allowed_chars,
 					game->map.matrix[(int)curr.y][(int)curr.x]))
-			{
-				ft_putstr_fd("bad char in map :(\n", 2);
 				return (0);
-			}
 			curr.x++;
 		}
 		curr.y++;

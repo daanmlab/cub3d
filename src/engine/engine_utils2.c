@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 18:08:09 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/26 12:20:23 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:20:00 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,25 @@ bool	no_colision(t_player *player, char side, int **map)
 t_vector	walk(t_player *player, char side, int **map)
 {
 	if (side == 'f' && no_colision(player, side, map))
-		return (v_sum(player->position, v_mult(player->dir, 0.01)));
+		return (v_sum(player->position, v_mult(player->dir, 0.02)));
 	else if (side == 'b' && no_colision(player, side, map))
-		return (v_sum(player->position, v_mult(player->dir, -0.01)));
+		return (v_sum(player->position, v_mult(player->dir, -0.02)));
 	else if ((((player->initial_dir == 'N' || player->initial_dir == 'S')
 				&& side == 'l')
 			|| ((player->initial_dir == 'E' || player->initial_dir == 'W')
 				&& side == 'r'))
 		&& no_colision(player, '1', map))
 		return (v_sum (player->position, v_mult(v_rotate(player->dir, PI / 2),
-					-0.01)));
+					-0.02)));
 	else if ((((player->initial_dir == 'N' || player->initial_dir == 'S')
 				&& side == 'r')
 			|| ((player->initial_dir == 'E' || player->initial_dir == 'W')
 				&& side == 'l'))
 		&& no_colision(player, '2', map))
 		return (v_sum (player->position, v_mult(v_rotate(player->dir, PI / 2),
-					0.01)));
+					0.02)));
 	else if (side == 's' && no_colision(player, 'f', map))
-		return (v_sum(player->position, v_mult(player->dir, 0.02)));
+		return (v_sum(player->position, v_mult(player->dir, 0.04)));
 	else
 		return (player->position);
 }

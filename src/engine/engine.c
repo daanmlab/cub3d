@@ -6,11 +6,14 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:43:12 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/26 11:20:41 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:56:44 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static void	draw_map(int **map, t_vector map_size, t_player *player,
+				t_img *frame);
 
 int	render_next_frame(t_game *game)
 {
@@ -35,6 +38,34 @@ int	render_next_frame(t_game *game)
 	setup_animation_curve(&game->player);
 	changing_weapon_animation(&game->player);
 	draw_hud_object(game, &game->player);
+	draw_map(game->map.real_map, game->map.size, &game->player, &game->frame);
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->frame.img, 0, 0);
 	return (0);
+}
+
+void	draw_map(int **map, t_vector map_size, t_player *player, t_img *frame)
+{
+	int	i;
+	int	j;
+	int	square;
+
+	square = WIDTH / (map_size.x * 5);
+	i = 0;
+	while (i < map_size.y)
+	{
+		j = 0;
+		while (j < map_size.x)
+		{
+			if (map[i][j] == 0)
+				rectangle(frame, new_rectangle(square, square, 0xFFFFFF,
+						new_vector(j * square, i * square)));
+			else if (map[i][j] == 1)
+				rectangle(frame, new_rectangle(square, square, 0x000000,
+						new_vector(j * square, i * square)));
+			j++;
+		}
+		i++;
+	}
+	rectangle(frame, new_rectangle(5, 5, 0xFF0000, new_vector(
+				player->position.x * square, player->position.y * square)));
 }

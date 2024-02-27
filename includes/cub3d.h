@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 15:06:49 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/26 21:52:42 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:28:32 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # define WIDTH 1080
 # define HEIGHT 720
-# define TEXTURE_SIZE 64
+# define TEXTURE_SIZE 512
 # define PI 3.14159265
 
 typedef struct s_img
@@ -200,7 +200,7 @@ void				rectangle(t_img *img, t_rectangle rectangle);
 void				my_mlx_pixel_put(t_img *img, t_vector vector,
 						unsigned int color);
 t_rectangle			new_rectangle(unsigned int width, unsigned int height,
-						unsigned int color);
+						unsigned int color, t_vector origin);
 void				draw_floor_and_ceiling(t_game *game, t_map map,
 						t_player player, t_img *img);
 void				draw_wall_line(t_engine *this, t_player *player,

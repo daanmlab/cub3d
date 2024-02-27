@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 13:23:20 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/26 11:56:36 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:45:07 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static int	set_player(t_game *game, t_vector pos)
 	temp = ft_strchr(direction, game->map.matrix[(int)pos.y][(int)pos.x]);
 	if (!temp)
 		return (0);
-	game->player.position.y = pos.y;
-	game->player.position.x = pos.x;
+	game->player.position.y = pos.y + 0.5;
+	game->player.position.x = pos.x + 0.5;
 	game->player.initial_dir = *temp;
 	game->player.dir = filter_initial_direction(temp);
 	game->player.plane = filter_initial_plane(temp);

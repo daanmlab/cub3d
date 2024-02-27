@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 16:06:46 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/26 20:57:32 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:06:06 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	floodfill(t_map *map, int **been, int x, int y)
 	been[y][x] = 1;
 	ft_putstr_fd("\e[1;1H\e[2J", 1);
 	print_matrix(map, been);
-	usleep(60000);
+	usleep(30000);
 	if (x <= 0 || y <= 0 || x >= map->size.x - 1 || y >= map->size.y - 1)
 	{
 		ft_putstr_fd("Floodfill failed\n", 2);
@@ -110,10 +110,7 @@ int	do_floodfill(t_game *game)
 		return (0);
 	else if (!floodfill(&game->map, been,
 			game->player.position.x, game->player.position.y))
-	{
-		free_been_matrix(been, &game->map);
 		return (0);
-	}
 	free_been_matrix(been, &game->map);
 	return (1);
 }

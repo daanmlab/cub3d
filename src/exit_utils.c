@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 19:44:41 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/26 21:36:46 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/27 12:12:59 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@ int	clean_exit(t_game	*game)
 		ft_free_tab(game->map.matrix);
 	if (game->map.real_map)
 		ft_free_int_matrix(game->map.real_map, game->map.size.y);
+	if (game->map.north_texture)
+		free(game->map.north_texture);
+	if (game->map.south_texture)
+		free(game->map.south_texture);
+	if (game->map.west_texture)
+		free(game->map.west_texture);
+	if (game->map.east_texture)
+		free(game->map.east_texture);
 	clear_images(game);
 	if (game->mlx_win)
 		mlx_destroy_window(game->mlx, game->mlx_win);

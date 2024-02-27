@@ -6,7 +6,7 @@
 /*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:10:27 by tlouro-c          #+#    #+#             */
-/*   Updated: 2024/02/26 12:22:39 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/27 13:09:25 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,12 @@ void	rectangle(t_img *img, t_rectangle rectangle)
 }
 
 t_rectangle	new_rectangle(unsigned int width, unsigned int height,
-		unsigned int color)
+		unsigned int color, t_vector origin)
 {
 	t_rectangle	new;
 
+	new.start.x = origin.x;
+	new.start.y = origin.y;
 	new.width = width;
 	new.height = height;
 	new.color = color;

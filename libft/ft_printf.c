@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 13:45:05 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/12 15:29:03 by dabalm           ###   ########.fr       */
+/*   Updated: 2024/02/27 12:21:07 by tlouro-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	put_str(char *str)
 	ft_putstr_fd((char *)temp, 1);
 	return (ft_strlen(temp));
 }
-
 
 int	checktype(char *t, va_list d)
 {
