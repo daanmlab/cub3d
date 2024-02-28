@@ -16,7 +16,6 @@ static void	clear_images(t_game *game);
 
 int	clean_exit(t_game	*game)
 {
-	mlx_do_key_autorepeaton(game->mlx);
 	if (game->map.matrix)
 		ft_free_tab(game->map.matrix);
 	if (game->map.real_map)
@@ -31,9 +30,13 @@ int	clean_exit(t_game	*game)
 		free(game->map.east_texture);
 	clear_images(game);
 	if (game->mlx_win)
+	{
+		mlx_mouse_show(game->mlx, game->mlx_win);
 		mlx_destroy_window(game->mlx, game->mlx_win);
+	}
 	if (game->mlx)
 	{
+		mlx_do_key_autorepeaton(game->mlx);
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 	}
