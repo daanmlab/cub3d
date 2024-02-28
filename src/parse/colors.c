@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlouro-c <tlouro-c@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: dabalm <dabalm@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 19:41:50 by dabalm            #+#    #+#             */
-/*   Updated: 2024/02/26 20:19:38 by tlouro-c         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:55:43 by dabalm           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,13 @@ int	get_colors(int fd, t_game *game)
 	line = get_next_line(fd);
 	game->floor_color.error = 1;
 	game->ceiling_color.error = 1;
-	while (set_color(line, game))
+	while (line && set_color(line, game))
 	{
 		free(line);
 		line = get_next_line(fd);
 	}
 	free(line);
-	return (!game->ceiling_color.error && !game->floor_color.error);
+	if (!game->ceiling_color.error && !game->floor_color.error)
+		return (1);
+	return (ft_putstr_fd("Error: invalid .cub file\n", 2), 0);
 }
