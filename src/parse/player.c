@@ -82,7 +82,7 @@ t_player	player_constructor(t_game *game)
 {
 	t_player	new;
 
-	new.mouse_sensibility = 0.006;
+	new.mouse_sensibility = 0.004;
 	new.last_mouse_x = WIDTH / 2;
 	new.last_mouse_y = HEIGHT / 2;
 	new.pov_rotation_y_axis = 0.0;

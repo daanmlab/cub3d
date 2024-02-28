@@ -67,15 +67,15 @@ void	apply_changes_on_player(t_game *game, t_player *player, int **map)
 		player->position = walk(player, 'l', map);
 	else if (player->is_walking_right)
 		player->position = walk(player, 'r', map);
-	player->delta_mouse_x = get_mouse_x(game) - player->last_mouse_x;
-	player->last_mouse_x = get_mouse_x(game);
+	player->delta_mouse_y = get_mouse_y(game) - player->last_mouse_y;
+	player->delta_mouse_x = get_mouse_x(game) - WIDTH / 2;
+	mlx_mouse_move(game->mlx, game->mlx_win, WIDTH / 2, HEIGHT / 2);
 	if (player->initial_dir == 'N' || player->initial_dir == 'S')
 		dir_and_plane_rotate(&player->dir, &player->plane,
 			player->delta_mouse_x * player->mouse_sensibility);
 	else
 		dir_and_plane_rotate(&player->dir, &player->plane,
 			-(player->delta_mouse_x * player->mouse_sensibility));
-	player->delta_mouse_y = get_mouse_y(game) - player->last_mouse_y;
 	player->last_mouse_y = get_mouse_y(game);
 	player->pov_rotation_y_axis
 		-= player->delta_mouse_y * player->mouse_sensibility;

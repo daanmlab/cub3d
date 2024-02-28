@@ -22,6 +22,7 @@ int	main(int argc, char const *argv[])
 		return (clean_exit(&game), 1);
 	if (setup_window(&game) == -1)
 		return (clean_exit(&game), 1);
+	mlx_mouse_hide(game.mlx, game.mlx_win);
 	event_listener(&game);
 	mlx_loop_hook(game.mlx, &render_next_frame, &game);
 	mlx_loop(game.mlx);
